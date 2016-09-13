@@ -5,7 +5,7 @@
 #include "PhysBody3D.h"
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"
-
+#include "Imgui\GL\gl3w.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -15,12 +15,12 @@ ModuleSceneIntro::~ModuleSceneIntro()
 {}
 
 // Load assets
-bool ModuleSceneIntro::Start()
+bool ModuleSceneIntro::Init()
 {
+	gl3wInit();
 	LOG("Loading Intro assets");
 	bool ret = true;
 	ImGui_ImplSdlGL3_Init(App->window->window);
-
 	return ret;
 }
 
@@ -28,18 +28,19 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
+	ImGui_ImplSdlGL3_Shutdown();
 	return true;
 }
 update_status ModuleSceneIntro::PreUpdate(float dt)
-{
-	//ImGui_ImplSdlGL3_NewFrame(App->window->window);
+{	
+	ImGui_ImplSdlGL3_NewFrame(App->window->window);
 	
 	return UPDATE_CONTINUE;
 }
+
 // Update: draw background
 update_status ModuleSceneIntro::Update(float dt)
-{/*
+{
 	static bool show_test_window = true;
 	static bool show_another_window = false;
 	static  ImVec4 clear_color = ImColor(114, 144, 154);
@@ -59,10 +60,14 @@ update_status ModuleSceneIntro::Update(float dt)
 		ImGui::ShowTestWindow(&show_test_window);
 		}
 		ImGui::Render();
-		*/
+
 	return UPDATE_CONTINUE;
 }
-
+update_status ModuleSceneIntro::PostUpdate(float dt)
+{
+	
+	return UPDATE_CONTINUE;
+}
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }

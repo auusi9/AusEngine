@@ -14,6 +14,7 @@
 #include "../SDL/include/SDL_syswm.h"
 #include "GL\gl3w.h"
 
+
 // Data
 static double       g_Time = 0.0f;
 static bool         g_MousePressed[3] = { false, false, false };
@@ -327,6 +328,7 @@ bool    ImGui_ImplSdlGL3_Init(SDL_Window* window)
     io.RenderDrawListsFn = ImGui_ImplSdlGL3_RenderDrawLists;   // Alternatively you can set this to NULL and call ImGui::GetDrawData() after ImGui::Render() to get the same ImDrawData pointer.
     io.SetClipboardTextFn = ImGui_ImplSdlGL3_SetClipboardText;
     io.GetClipboardTextFn = ImGui_ImplSdlGL3_GetClipboardText;
+
 
 #ifdef _WIN32
     SDL_SysWMinfo wmInfo;
