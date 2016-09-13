@@ -52,15 +52,26 @@ update_status ModuleImGui::Update(float dt)
 			{
 				/*ImGui::MenuItem("New");
 				ImGui::MenuItem("Save");*/
-
+				
 				if (ImGui::MenuItem("Quit"))
 					ret = UPDATE_STOP;
 
 				ImGui::EndMenu();
 			}
+			if (ImGui::BeginMenu("Open-Close"))
+			{
+				if (ImGui::MenuItem("Open test window"))
+				{
+					if (show_test_window)
+						show_test_window = false;
+					else
+						show_test_window = true;
+				}
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndMainMenuBar();
 		}
-
 	}
 	if (show_test_window)
 	{
