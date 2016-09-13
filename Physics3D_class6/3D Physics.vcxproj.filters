@@ -111,6 +111,9 @@
     <ClInclude Include="Imgui\GL\glcorearb.h">
       <Filter>Sources\Containers\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleImGui.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -178,6 +181,9 @@
     </ClCompile>
     <ClCompile Include="Imgui\GL\gl3w.c">
       <Filter>Sources\Containers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleImGui.cpp">
+      <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
