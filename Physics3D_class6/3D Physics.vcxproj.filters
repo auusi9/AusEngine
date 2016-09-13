@@ -19,6 +19,9 @@
     <Filter Include="Sources\Modules\Game">
       <UniqueIdentifier>{83f46af7-e02f-40c0-9e56-41d76082527b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Containers\imgui">
+      <UniqueIdentifier>{e76e4fb1-e430-40b8-9265-d38ea0b34ae9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -81,8 +84,32 @@
     <ClInclude Include="PhysBody3D.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="PhysVehicle3D.h">
-      <Filter>Sources\Helpers</Filter>
+    <ClInclude Include="Imgui\imconfig.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_internal.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_rect_pack.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_textedit.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\stb_truetype.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\imgui_impl_sdl_gl3.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\GL\gl3w.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Imgui\GL\glcorearb.h">
+      <Filter>Sources\Containers\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,8 +164,20 @@
     <ClCompile Include="PhysBody3D.cpp">
       <Filter>Sources\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="PhysVehicle3D.cpp">
-      <Filter>Sources\Helpers</Filter>
+    <ClCompile Include="Imgui\imgui.cpp">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_draw.cpp">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_demo.cpp">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\imgui_impl_sdl_gl3.cpp">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Imgui\GL\gl3w.c">
+      <Filter>Sources\Containers\imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -31,7 +31,6 @@ public:
 	PhysBody3D*		AddBody(const Cylinder& cylinder, float mass = 1.0f);
 	PhysBody3D*		AddBody(const Plane& plane);
 	PhysBody3D*		AddHeighField(const char* filename, int width, int height);
-	PhysVehicle3D*	AddVehicle(const VehicleInfo& info);
 
 	void DeleteBody(PhysBody3D* body);
 
@@ -44,12 +43,10 @@ private:
 	btBroadphaseInterface*				broad_phase;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld*			world;
-	btDefaultVehicleRaycaster*			vehicle_raycaster;
 	DebugDrawer*						debug_draw;
 
 	p2List<btCollisionShape*> shapes;
 	p2List<PhysBody3D*> bodies;
-	p2List<PhysVehicle3D*> vehicles;
 };
 
 class DebugDrawer : public btIDebugDraw
