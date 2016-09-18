@@ -7,14 +7,15 @@
 #include "Bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h"
 
 #ifdef _DEBUG
-	#pragma comment (lib, "Bullet/bin/BulletDynamics_vs2010_debug.lib")
-	#pragma comment (lib, "Bullet/bin/BulletCollision_vs2010_debug.lib")
-	#pragma comment (lib, "Bullet/bin/LinearMath_vs2010_debug.lib")
+	#pragma comment (lib, "Bullet/bin/BulletDynamics_debug.lib")
+	#pragma comment (lib, "Bullet/bin/BulletCollision_debug.lib")
+	#pragma comment (lib, "Bullet/bin/LinearMath_debug.lib")
 #else
-	#pragma comment (lib, "Bullet/bin/BulletDynamics_vs2010.lib")
-	#pragma comment (lib, "Bullet/bin/BulletCollision_vs2010.lib")
-	#pragma comment (lib, "Bullet/bin/LinearMath_vs2010.lib")
+	#pragma comment (lib, "Bullet/bin/BulletDynamics.lib")
+	#pragma comment (lib, "Bullet/bin/BulletCollision.lib")
+	#pragma comment (lib, "Bullet/bin/LinearMath.lib")
 #endif
+
 
 ModulePhysics3D::ModulePhysics3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {

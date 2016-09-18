@@ -17,6 +17,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 // Load assets
 bool ModuleSceneIntro::Init()
 {
+
 	bool ret = true;
 	return ret;
 }
@@ -36,6 +37,7 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane(0, 1, 0, 0).Render();
+
 	return UPDATE_CONTINUE;
 }
 update_status ModuleSceneIntro::PostUpdate(float dt)

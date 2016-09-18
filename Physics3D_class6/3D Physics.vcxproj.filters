@@ -294,6 +294,9 @@
     <ClInclude Include="glmath.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="AusRandom.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="glmath.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="AusRandom.cpp">
+      <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
