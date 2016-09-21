@@ -1,0 +1,113 @@
+
+
+## Widgets #
+
+## Graphs widgets #
+[ ] Animate
+Frame Times
+avg 0.0 Lines
+Histogram
+--------------------------------
+Sin func 70 Sample count
+Lines
+Histogram
+--------------------------------
+73% Progress Bar
+1286/1753
+
+## Layout #
+> Child regions
+    Without border
+    Goto
+    50
+> Widgets Width
+    PushItemWidth(100) (?)
+    0.000 float
+    PushItemWidth(GetWindowWidth() * 0.5f) (?)
+    0.000 float
+    PushItemWidth(GetContentRegionAvailWidth() * 0.5f) (?)
+    0.000 float
+    PushItemWidth(-100) (?)
+    0.000 float
+    PushItemWidth(-1) (?)
+    0.000 float
+> Basic Horizontal Layout
+    (Use ImGui::SameLine() to keep adding items to the right of the preceding item)
+    Two items: Hello Sailor
+    More spacing: Hello Sailor
+    Normal buttons Banana Apple Corniflower
+    Small buttons Like this one can fit within a text block.
+    Aligned x=150 x=300
+    Aligned x=150 x=300
+    [ ] My [ ] Tailor [ ] Is [ ] Rich
+    Combo 1.000 X 2.000 Y 3.000 Z
+    Lists:
+    A B
+> Groups
+    (Using ImGui::BeginGroup()/EndGroup() to layout items. BeginGroup() basically locks the horizontal position. EndGroup() bundles the whole group so that you can use functions such as IsItemHovered() on it.)
+    AAA BBB
+    CCC
+    DDD
+    EEE
+    ACTION REACTION
+    LEVERAGE
+    BUZZWORD
+    List
+> Text Baseline Alignment
+    (This is testing the vertical alignment that occurs on text to keep it at the same baseline as widgets. Lines only composed of text or "small" widgets fit in less vertical spaces than lines with normal widgets)
+    One
+    Two
+    Three Hello
+    World Banana
+    Banana Hello
+    World One
+    Two
+    Three
+    HOP Banana Hello
+    World Banana
+    HOP Hello
+    World Banana
+    TEST TEST TEST
+    Text aligned to Widget Widget Widget Widget
+    Button > Node
+        Item 0..
+        Item 1..
+        Item 2..
+        Item 3..
+        Item 4..
+        Item 5..
+    > Node Button
+        Item 0..
+        Item 1..
+        Item 2..
+        Item 3..
+        Item 4..
+        Item 5..
+    Button Bullet text
+    Node Button
+> Scrolling
+    (Use SetScrollHere() or SetScrollFromPosY() to scroll to a given position.)
+    [x] Track Line 50
+    Scroll To y = 200 px
+    Top
+    25%
+    Center
+    75%
+    Bottom
+> Horizontal Scrolling
+    Horizontal scrolling for a window has to be enabled explicitly via the ImGuiWindowFlags_HorizontalScrollbar flag.
+    You may want to explicitly specify content width by calling SetNextWindowContentWidth() before Begin().
+    7 Lines
+    << Scroll from code >>
+> Clipping
+    On a per-widget basis we are occasionally clipping text CPU-side if it won't fit in its frame. Otherwise we are doing coarser clipping + passing a scissor rectangle to the renderer. The system is designed to try minimizing both execution and CPU/GPU rendering cost.
+    100 100 size
+    (Click and drag)
+
+## Popups & Modal windows #
+
+## Columns #
+
+## Filtering #
+
+## Keyboard, Mouse & Focus #

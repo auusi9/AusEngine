@@ -50,15 +50,15 @@ update_status ModuleImGui::Update(float dt)
 			bool selected = false;
 			if (ImGui::BeginMenu("File"))
 			{
-				/*ImGui::MenuItem("New");
-				ImGui::MenuItem("Save");*/
+				/*ImGui::MItenuItem("New");
+				ImGui::Menuem("Save");*/
 				
 				if (ImGui::MenuItem("Quit"))
 					ret = UPDATE_STOP;
 
 				ImGui::EndMenu();
 			}
-			if (ImGui::BeginMenu("Open-Close"))
+			if (ImGui::BeginMenu("Window"))
 			{
 				if (ImGui::MenuItem("Open test window"))
 				{
