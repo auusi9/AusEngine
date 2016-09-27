@@ -12,7 +12,7 @@
 // SDL,GL3W
 #include "../SDL/include/SDL.h"
 #include "../SDL/include/SDL_syswm.h"
-#include "GL\gl3w.h"
+#include "..\Glew\include\glew.h"
 
 
 // Data

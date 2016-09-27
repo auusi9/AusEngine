@@ -105,12 +105,6 @@
     <ClInclude Include="Imgui\imgui_impl_sdl_gl3.h">
       <Filter>Sources\Containers\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Imgui\GL\gl3w.h">
-      <Filter>Sources\Containers\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="Imgui\GL\glcorearb.h">
-      <Filter>Sources\Containers\imgui</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleImGui.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -297,6 +291,18 @@
     <ClInclude Include="AusRandom.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Glew\include\eglew.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glew.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\glxew.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Glew\include\wglew.h">
+      <Filter>Sources\Containers\imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -357,9 +363,6 @@
       <Filter>Sources\Containers\imgui</Filter>
     </ClCompile>
     <ClCompile Include="Imgui\imgui_impl_sdl_gl3.cpp">
-      <Filter>Sources\Containers\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="Imgui\GL\gl3w.c">
       <Filter>Sources\Containers\imgui</Filter>
     </ClCompile>
     <ClCompile Include="ModuleImGui.cpp">

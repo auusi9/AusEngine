@@ -3,7 +3,8 @@
 #include "ModuleImGui.h"
 #include "Imgui\imgui.h"
 #include "Imgui\imgui_impl_sdl_gl3.h"
-#include "Imgui\GL\gl3w.h"
+#include "Glew\include\glew.h"
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 
 ModuleImGui::ModuleImGui(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -16,7 +17,7 @@ ModuleImGui::~ModuleImGui()
 bool ModuleImGui::Init()
 {
 	bool ret = true;
-	gl3wInit();
+	glewInit();
 
 	ImGui_ImplSdlGL3_Init(App->window->window);
 	return ret;

@@ -34,6 +34,7 @@ Application::Application()
 	AddModule(imgui);
 	// Characters
 	AddModule(player);
+	
 }
 
 Application::~Application()

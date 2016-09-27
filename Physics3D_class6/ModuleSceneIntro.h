@@ -14,7 +14,7 @@ public:
 	ModuleSceneIntro(Application* app, bool start_enabled = true);
 	~ModuleSceneIntro();
 
-	bool Init();
+	bool Start();
 	update_status Update(float dt);
 	update_status PreUpdate(float dt);
 	bool CleanUp();
@@ -22,5 +22,6 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-
+	uint my_id;
+	uint my_indices;
 };
