@@ -9,6 +9,7 @@
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "Assimp.h"
 
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
@@ -26,6 +27,18 @@ bool ModuleSceneIntro::Start()
 {
 
 	bool ret = true;
+	struct aiLogStream stream;
+	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	aiAttachLogStream(&stream);
+	const aiScene* scene = aiImportFile("Assets/FBX/Warrior.fbx", aiProcessPreset_TargetRealtime_MaxQuality);
+
+	if (scene != nullptr && scene->HasMeshes())
+	{
+		// Use scene->mNumMeshes to iterate on scene->mMeshes array
+		aiReleaseImport(scene);
+	}
+	else
+		LOG("Error loading scene %s", "Assets/FBX/Warrior.fbx");
 
 
 	// Cube by triangles with buffer -----------------
@@ -78,7 +91,7 @@ bool ModuleSceneIntro::Start()
 	my_id = 0;
 	glGenBuffers(1, (GLuint*) &(my_id));
 	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, g_vertex_data, GL_STATIC_DRAW);*/
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 36 * 3, g_vertex_data, GL_STATIC_DRAW);
 
 	// Cube by triangles with  buffer and indices -----------------
 	float x = 1.0f;
@@ -126,7 +139,7 @@ bool ModuleSceneIntro::Start()
 	glGenBuffers(1, (GLuint*) &(my_indices));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*36, g_index_data, GL_STATIC_DRAW);
-
+	*/
 	return ret;
 }
 
@@ -134,6 +147,7 @@ bool ModuleSceneIntro::Start()
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
+	aiDetachAllLogStreams();
 	return true;
 }
 update_status ModuleSceneIntro::PreUpdate(float dt)
@@ -145,7 +159,7 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane(0, 1, 0, 0).Render();
-
+	/**
 //Cube with 2 buffers
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
@@ -154,7 +168,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
 
-	/**
+	
 	// Cube by triangles -----------------
 	float x = 2.0f;
 	float y = 2.0f;

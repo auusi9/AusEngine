@@ -303,6 +303,9 @@
     <ClInclude Include="Glew\include\wglew.h">
       <Filter>Sources\Containers\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Assimp.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
