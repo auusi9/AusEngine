@@ -13,6 +13,8 @@
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleImGui.h"
+#include "ModuleFileSystem.h"
+#include "ModuleLoadMeshes.h"
 class Application
 {
 public:
@@ -25,7 +27,8 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleImGui* imgui;
-
+	ModuleFileSystem* fs;
+	ModuleLoadMeshes* MeshD;
 private:
 
 	Timer	ms_timer;

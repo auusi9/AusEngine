@@ -15,6 +15,7 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
+using namespace std;
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -27,20 +28,9 @@ bool ModuleSceneIntro::Start()
 {
 
 	bool ret = true;
-	struct aiLogStream stream;
-	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	aiAttachLogStream(&stream);
-	const aiScene* scene = aiImportFile("Assets/FBX/Warrior.fbx", aiProcessPreset_TargetRealtime_MaxQuality);
-
-	if (scene != nullptr && scene->HasMeshes())
-	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		aiReleaseImport(scene);
-	}
-	else
-		LOG("Error loading scene %s", "Assets/FBX/Warrior.fbx");
 
 
+	mesh = App->MeshD->Load("Assets/FBX/warrior.fbx") ;
 	// Cube by triangles with buffer -----------------
 	/*float x = 1.0f;
 	float y = 1.0f;
@@ -250,12 +240,23 @@ update_status ModuleSceneIntro::Update(float dt)
 	glLineWidth(1.0f);
 	
 	*/
+	for (vector<Mesh>::iterator item = mesh.begin(); item != mesh.end(); ++item)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item).id_indices);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+		glDrawElements(GL_TRIANGLES, (*item).num_indices, GL_UNSIGNED_INT, NULL);
+		glDisableClientState(GL_VERTEX_ARRAY);
+
+	}
 	return UPDATE_CONTINUE;
 }
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
+
 	
-	return UPDATE_CONTINUE;
+		return UPDATE_CONTINUE;
 }
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {

@@ -2,12 +2,12 @@
 #include "Module.h"
 #include "p2DynArray.h"
 #include "Globals.h"
-
+#include <vector>
 #define BOUNCER_TIME 200
 
 struct PhysBody3D;
 class Cube;
-
+class Mesh;
 class ModuleSceneIntro : public Module
 {
 public:
@@ -31,4 +31,5 @@ public:
 	uint id_indices = 0; 
 	uint num_vertices = 0;
 	float* vertices = nullptr;
+	std::vector<Mesh> mesh;
 };

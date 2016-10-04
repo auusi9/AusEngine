@@ -151,7 +151,9 @@
     <ClInclude Include="MathGeoLib\src\Math\TransformOps.h" />
     <ClInclude Include="MathGeoLib\src\Time\Clock.h" />
     <ClInclude Include="ModuleCamera3D.h" />
+    <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="ModuleImGui.h" />
+    <ClInclude Include="ModuleLoadMeshes.h" />
     <ClInclude Include="ModulePhysics3D.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="p2List.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="PhysBody3D.h" />
+    <ClInclude Include="PhysFS\include\physfs.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="AusRandom.h" />
     <ClInclude Include="Timer.h" />
@@ -212,8 +215,10 @@
     <ClCompile Include="MathGeoLib\src\Time\Clock.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
+    <ClCompile Include="ModuleFileSystem.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
+    <ClCompile Include="ModuleLoadMeshes.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
     <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
