@@ -154,13 +154,13 @@
     <ClInclude Include="ModuleFileSystem.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleLoadMeshes.h" />
+    <ClInclude Include="ModuleLoadTextures.h" />
     <ClInclude Include="ModulePhysics3D.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleAudio.h" />
     <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleSceneIntro.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2DynArray.h" />
@@ -219,8 +219,8 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleLoadMeshes.cpp" />
+    <ClCompile Include="ModuleLoadTextures.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
-    <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />

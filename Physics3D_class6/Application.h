@@ -7,7 +7,6 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
-#include "ModulePlayer.h"
 #include "ModulePhysics3D.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
@@ -15,13 +14,14 @@
 #include "ModuleImGui.h"
 #include "ModuleFileSystem.h"
 #include "ModuleLoadMeshes.h"
+#include "ModuleLoadTextures.h"
+
 class Application
 {
 public:
 	ModuleWindow* window;
 	ModuleInput* input;
 	ModuleAudio* audio;
-	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
 	ModulePhysics3D* physics3D;
 	ModuleRenderer3D* renderer3D;
@@ -29,6 +29,7 @@ public:
 	ModuleImGui* imgui;
 	ModuleFileSystem* fs;
 	ModuleLoadMeshes* MeshD;
+	ModuleLoadTextures* tex;
 private:
 
 	Timer	ms_timer;

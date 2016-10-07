@@ -75,9 +75,6 @@
     <ClInclude Include="ModuleSceneIntro.h">
       <Filter>Sources\Modules\Game</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayer.h">
-      <Filter>Sources\Modules\Game</Filter>
-    </ClInclude>
     <ClInclude Include="ModulePhysics3D.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
@@ -315,6 +312,9 @@
     <ClInclude Include="ModuleLoadMeshes.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleLoadTextures.h">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -357,9 +357,6 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Sources\Modules\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePlayer.cpp">
       <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
     <ClCompile Include="PhysBody3D.cpp">
@@ -480,6 +477,9 @@
       <Filter>Sources\Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleLoadMeshes.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleLoadTextures.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
   </ItemGroup>

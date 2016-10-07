@@ -3,8 +3,7 @@
 
 #include "Module.h"
 #include <cstdint>
-#include <vector>
-#include <list>
+
 struct Mesh
 {
 	//Vertices

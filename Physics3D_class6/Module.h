@@ -2,6 +2,7 @@
 
 class Application;
 struct PhysBody3D;
+#include "Globals.h"
 
 class Module
 {

@@ -11,7 +11,6 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this);
 	scene_intro = new ModuleSceneIntro(this);
 	physics3D = new ModulePhysics3D(this);
 	renderer3D = new ModuleRenderer3D(this);
@@ -19,6 +18,7 @@ Application::Application()
 	imgui = new ModuleImGui(this);
 	fs = new ModuleFileSystem(this);
 	MeshD = new ModuleLoadMeshes(this);
+	tex = new ModuleLoadTextures(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
 	// They will CleanUp() in reverse order
@@ -32,11 +32,11 @@ Application::Application()
 	AddModule(audio);
 	AddModule(fs);
 	AddModule(MeshD);
+	AddModule(tex);
 	// Scenes
 	AddModule(scene_intro);
 	AddModule(imgui);
 	// Characters
-	AddModule(player);
 	
 }
 

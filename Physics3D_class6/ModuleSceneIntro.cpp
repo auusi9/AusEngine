@@ -15,6 +15,10 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
+#define checkImageWidth 64
+#define checkImageHeight 64
+
+
 using namespace std;
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -31,6 +35,39 @@ bool ModuleSceneIntro::Start()
 
 
 	mesh = App->MeshD->Load("Assets/FBX/warrior.fbx") ;
+
+	//Textures
+	GLubyte checkImage[checkImageHeight][checkImageWidth][4];
+
+
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glShadeModel(GL_FLAT);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	int i, j, c;
+
+	for (i = 0; i < checkImageHeight; i++) {
+		for (j = 0; j < checkImageWidth; j++) {
+			c = ((((i & 0x8) == 0) ^ ((j & 0x8)) == 0)) * 255;
+			checkImage[i][j][0] = (GLubyte)c;
+			checkImage[i][j][1] = (GLubyte)c;
+			checkImage[i][j][2] = (GLubyte)c;
+			checkImage[i][j][3] = (GLubyte)255;
+		}
+	}
+	
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, checkImageWidth,
+		checkImageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+		checkImage);
+
+
 	// Cube by triangles with buffer -----------------
 	/*float x = 1.0f;
 	float y = 1.0f;
@@ -149,97 +186,97 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane(0, 1, 0, 0).Render();
-	/**
+	
 //Cube with 2 buffers
-	glEnableClientState(GL_VERTEX_ARRAY);
+	/*glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, NULL);
 	glDisableClientState(GL_VERTEX_ARRAY);
-
+	*/
 	
 	// Cube by triangles -----------------
-	float x = 2.0f;
-	float y = 2.0f;
-	float z = 2.0f;
+	float x = 1.0f;
+	float y = 1.0f;
+	float z = 1.0f;
 
-	float mx = x * 2.5f;
-	float my = y * 2.5f;
-	float mz = z * 2.5f;
+	float mx = x * 0.5f;
+	float my = y * 0.5f;
+	float mz = z * 0.5f;
 
 	glBegin(GL_TRIANGLES);
-	// Face -Z -------------------
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(-mx, -my, -mz);
-	glVertex3f(-mx, my, -mz);
-	glVertex3f(mx, -my, -mz);
 
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(mx, -my, -mz);
-	glVertex3f(-mx, my, -mz);
-	glVertex3f(mx, my, -mz);
-
-	// Face X -------------------
+	// X -------------------
 	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(mx, -my, -mz);
-	glVertex3f(mx, my, -mz);
-	glVertex3f(mx, -my, mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, -my, mz); //A
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, my, -mz); //D
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, my, mz);  //B
 
 	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(mx, -my, mz);
-	glVertex3f(mx, my, -mz);
-	glVertex3f(mx, my, mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, -my, -mz); //C
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, my, -mz); //D
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, -my, mz); //A
 
-	// Face Z -------------------
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-mx, -my, mz);
-	glVertex3f(mx, -my, mz);
-	glVertex3f(mx, my, mz);
 
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-mx, -my, mz);
-	glVertex3f(mx, my, mz);
-	glVertex3f(-mx, my, mz);
-
-	// Face -X ------------------
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-mx, -my, -mz);
-	glVertex3f(-mx, -my, mz);
-	glVertex3f(-mx, my, mz);
-
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-mx, -my, -mz);
-	glVertex3f(-mx, my, mz);
-	glVertex3f(-mx, my, -mz);
-
-	// Face Y -------------------
+													 // Y -------------------
 	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(mx, my, mz);
-	glVertex3f(mx, my, -mz);
-	glVertex3f(-mx, my, -mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, my, mz); //B
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, my, -mz); //D
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, my, -mz); //E
 
 	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(mx, my, mz);
-	glVertex3f(-mx, my, -mz);
-	glVertex3f(-mx, my, mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, my, mz); //B
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, my, -mz); //E
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, my, mz); //F
 
-	// Face -Y ------------------
+													 // Z -------------------
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, -my, mz); //G
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, -my, mz); //A
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, my, mz); //B
+
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, -my, mz); //G
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, my, mz); //B
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, my, mz); //F
+
+													 // -X ------------------
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, -my, -mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, my, mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, my, -mz);
+
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, -my, -mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, -my, mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, my, mz);
+
+	// -Y ------------------
 	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-mx, -my, mz);
-	glVertex3f(-mx, -my, -mz);
-	glVertex3f(mx, -my, -mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, -my, mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, -my, -mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, -my, -mz);
 
 	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(-mx, -my, mz);
-	glVertex3f(mx, -my, -mz);
-	glVertex3f(mx, -my, mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, -my, mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, -my, -mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, -my, mz);
+
+	// -Z -------------------
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glTexCoord2f(0.f, 1.f); glVertex3f(mx, -my, -mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(-mx, my, -mz);
+	glTexCoord2f(1.f, 1.f); glVertex3f(mx, my, -mz);
+
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glTexCoord2f(1.f, 1.f); glVertex3f(-mx, -my, -mz);
+	glTexCoord2f(0.f, 1.f); glVertex3f(-mx, my, -mz);
+	glTexCoord2f(1.f, 0.f); glVertex3f(mx, -my, -mz);
 
 	glEnd();
-
-	glLineWidth(1.0f);
 	
-	*/
+	
 	for (vector<Mesh>::iterator item = mesh.begin(); item != mesh.end(); ++item)
 	{
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -252,12 +289,12 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 	return UPDATE_CONTINUE;
 }
+
 update_status ModuleSceneIntro::PostUpdate(float dt)
 {
-
-	
 		return UPDATE_CONTINUE;
 }
+
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }

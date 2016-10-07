@@ -8,6 +8,7 @@
 struct PhysBody3D;
 class Cube;
 class Mesh;
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -32,4 +33,6 @@ public:
 	uint num_vertices = 0;
 	float* vertices = nullptr;
 	std::vector<Mesh> mesh;
+
+	uint texture;
 };
