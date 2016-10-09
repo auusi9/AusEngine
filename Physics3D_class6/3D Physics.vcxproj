@@ -77,6 +77,9 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Assimp.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Glew\include\eglew.h" />
     <ClInclude Include="Glew\include\glew.h" />
     <ClInclude Include="Glew\include\glxew.h" />
@@ -152,6 +155,7 @@
     <ClInclude Include="MathGeoLib\src\Time\Clock.h" />
     <ClInclude Include="ModuleCamera3D.h" />
     <ClInclude Include="ModuleFileSystem.h" />
+    <ClInclude Include="ModuleGameObjectManager.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleLoadMeshes.h" />
     <ClInclude Include="ModuleLoadTextures.h" />
@@ -175,6 +179,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AusRandom.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="glmath.cpp" />
     <ClCompile Include="Imgui\imgui.cpp" />
     <ClCompile Include="Imgui\imgui_demo.cpp" />
@@ -216,6 +223,7 @@
     <ClCompile Include="ModuleAudio.cpp" />
     <ClCompile Include="ModuleCamera3D.cpp" />
     <ClCompile Include="ModuleFileSystem.cpp" />
+    <ClCompile Include="ModuleGameObjectManager.cpp" />
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleLoadMeshes.cpp" />
