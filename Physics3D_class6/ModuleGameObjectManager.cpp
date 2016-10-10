@@ -33,6 +33,7 @@ GameObject* ModuleGameObjectManager::AddGameObject(GameObject* parent)
 		parent = root;
 
 	GameObject* object = new GameObject(parent);
+	parent->goChilds.push_back(object);
 
 	return object;
 }

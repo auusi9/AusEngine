@@ -1,12 +1,17 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Globals.h"
-
+#include "ComponentTransform.h"
 using namespace std;
+
+GameObject::GameObject()
+{
+	root = nullptr;
+}
 
 GameObject::GameObject(GameObject* parent)
 {
-
+	root = parent;
 }
 
 GameObject::~GameObject()
@@ -33,6 +38,7 @@ bool GameObject::CleanUp()
 }
 bool GameObject::Start()
 {
+	
 
 	return true;
 }
@@ -58,7 +64,7 @@ bool GameObject::Update()
 
 Component* GameObject::AddComponent(componentType _type)
 {
-	Component* component = new Component(_type);
+	Component* component = new Component();
 	Components.push_back(component);
 	return component;
 }

@@ -187,7 +187,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane(0, 1, 0, 0).Render();
 	
-//Cube with 2 buffers
+	//Cube with 2 buffers
 	/*glEnableClientState(GL_VERTEX_ARRAY);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_indices);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -287,6 +287,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		glDisableClientState(GL_VERTEX_ARRAY);
 
 	}
+
 	return UPDATE_CONTINUE;
 }
 

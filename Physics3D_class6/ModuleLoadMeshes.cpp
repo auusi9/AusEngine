@@ -73,7 +73,7 @@ vector<Mesh> ModuleLoadMeshes::Load(const char* path)
 				{
 					if (mesh_to_load->mFaces[f].mNumIndices != 3)
 					{
-						LOG("WARNING: geometry with face != 3 indices is trying to be loaded");
+
 					}
 					else
 					{
@@ -82,8 +82,6 @@ vector<Mesh> ModuleLoadMeshes::Load(const char* path)
 				}
 			}
 
-			//Load indices buffer to VRAM
-			//Load buffer to VRAM
 			glGenBuffers(1, (GLuint*) &(mesh.id_indices));
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);

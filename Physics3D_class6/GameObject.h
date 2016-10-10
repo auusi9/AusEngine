@@ -7,6 +7,7 @@ enum componentType;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject(GameObject* parent);
 	~GameObject();
 
