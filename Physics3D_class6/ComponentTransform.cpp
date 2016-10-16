@@ -7,20 +7,25 @@ ComponentTransform::ComponentTransform(GameObject* go) : Component(Transform,go)
 	position = { 0,0,0 };
 	angles = { 0,0,0 };
 	scale = { 1,1,1 };
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 ComponentTransform::ComponentTransform(math::float3 _position, math::float3 _rotationAngles, math::float3 _scale, GameObject* go) : Component(Transform,go)
 {
 	position = _position;
-	angles = _rotationAngles;
+	angles = DegToRad(_rotationAngles);
 	scale = _scale;
+	SetRotation(angles);
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 ComponentTransform::ComponentTransform(math::float3 _position, math::float3 _rotationAngles, GameObject* go) : Component(Transform,go)
 {
 	position = _position;
-	angles = _rotationAngles;
+	angles = DegToRad(_rotationAngles);
 	scale = {1,1,1};
+	SetRotation(angles);
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 ComponentTransform::ComponentTransform(math::float3 _position, GameObject* go) : Component(Transform,go)
@@ -28,6 +33,7 @@ ComponentTransform::ComponentTransform(math::float3 _position, GameObject* go) :
 	position = _position;
 	angles = { 0,0,0 };
 	scale = { 1,1,1 };
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 ComponentTransform::~ComponentTransform()
@@ -57,7 +63,7 @@ void ComponentTransform::OnEditor()
 		}
 		if (ImGui::DragFloat3("##sca", scale.ptr()))
 		{
-			SetScale(angles);
+			SetScale(scale);
 		}
 	}
 
@@ -67,16 +73,26 @@ void ComponentTransform::OnEditor()
 void ComponentTransform::SetPosition(math::float3 _position)
 {
 	position = _position;
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 void ComponentTransform::SetRotation(math::float3 _rotationAngles)
 {
 	angles = _rotationAngles;
+	anglesRad = DegToRad(_rotationAngles);
+	rotation = rotation.FromEulerXYZ(anglesRad.z, anglesRad.y, anglesRad.x);
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
-
+void ComponentTransform::SetRotationQuat(math::Quat _rotation)
+{
+	angles = _rotation.ToEulerXYZ();
+	rotation = _rotation;
+	local_transform = local_transform.FromTRS(position, rotation, scale);
+}
 void ComponentTransform::SetScale(math::float3 _scale)
 {
 	scale = _scale;
+	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
 math::float3 ComponentTransform::GetPosition() const
@@ -101,8 +117,27 @@ math::float3 ComponentTransform::GetWorldPosition() const
 	if (gameObject->root != nullptr)
 	{
 		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->GetComponent(Transform);
-		tmpposition += parentTransform->GetWorldPosition();
+		if (parentTransform != nullptr)
+			tmpposition += parentTransform->GetWorldPosition();
 	}
 
 	return tmpposition;
+}
+
+math::float4x4 ComponentTransform::GetWorldTransform() const
+{
+	math::float4x4 tmptransform = local_transform;
+
+	if (gameObject->root != nullptr)
+	{
+		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->GetComponent(Transform);
+		if(parentTransform != nullptr)
+			tmptransform =  parentTransform->GetWorldTransform() * tmptransform;
+	}
+
+	return tmptransform;
+}
+math::float4x4 ComponentTransform::GetLocalTransform() const
+{
+	return local_transform;
 }

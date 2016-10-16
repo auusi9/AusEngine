@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
-
+#include "ComponentMaterial.h"
 using namespace std;
 
 GameObject::GameObject()
@@ -76,6 +76,9 @@ Component* GameObject::AddComponent(componentType _type)
 			break;
 
 		case Meshes: component = new ComponentMesh(this);
+			break;
+
+		case Material: component = new ComponentMaterial(this);
 			break;
 
 		default: component = new ComponentTransform(this); 

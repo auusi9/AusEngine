@@ -2,9 +2,8 @@
 #define __COMPONENTMESH_H__
 
 #include "Component.h"
-#include <vector>
 
-class Mesh;
+#include "ModuleLoadMeshes.h"
 
 class ComponentMesh : public Component
 {
@@ -15,11 +14,12 @@ public:
 	componentType type;
 	
 	bool Update();
-	bool AddMesh(std::vector<Mesh> _mesh);
+	bool AddMesh(MeshT _mesh);
 	bool DeleteMesh();
 	void OnEditor();
+	MeshT Cmesh;
 private:
-	std::vector<Mesh> mesh;
+	
 };
 
 #endif // !__COMPONENTMESH_H__

@@ -6,7 +6,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "ModuleLoadMeshes.h"
-
+#include "MathGeoLib\src\MathGeoLib.h"
 #pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -166,15 +166,30 @@ void ModuleRenderer3D::OnResize(int width, int height)
 }
 
 
-void ModuleRenderer3D::RenderMesh(std::vector<Mesh> mesh) 
+void ModuleRenderer3D::RenderMesh(MeshT mesh, math::float4x4 transform,uint tex_id)
 {
-	for (std::vector<Mesh>::iterator item = mesh.begin(); item != mesh.end(); ++item)
-	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item).id_indices);
-		glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glPushMatrix();
+	glMultMatrixf(*transform.Transposed().v);
 
-		glDrawElements(GL_TRIANGLES, (*item).num_indices, GL_UNSIGNED_INT, NULL);
-		glDisableClientState(GL_VERTEX_ARRAY);
-	}
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
+	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
+	glDrawElements(GL_TRIANGLES, mesh.num_indices, GL_UNSIGNED_INT, NULL);
+
+
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glPopMatrix();
 }

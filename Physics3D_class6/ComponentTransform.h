@@ -20,6 +20,7 @@ public:
 
 	void SetPosition(math::float3 _position);
 	void SetRotation(math::float3 _rotation);
+	void SetRotationQuat(math::Quat _rotationAngles);
 	void SetScale(math::float3 _scale);
 
 	math::float3 GetPosition() const;
@@ -27,13 +28,17 @@ public:
 	math::float3 GetScale() const;
 
 	math::float3 GetWorldPosition() const;
-	
+
+	math::float4x4 GetWorldTransform() const;
+	math::float4x4 GetLocalTransform() const;
 private:
 	//Made this private because its the local transform and it depends on the parent.
-	math::float3 position;
-	math::Quat rotation;
-	math::float3 angles;
-	math::float3 scale;
+	math::float3 position = math::float3::zero;
+	math::Quat rotation = math::Quat::identity;
+	math::float3 angles = math::float3::zero;
+	math::float3 anglesRad = math::float3::zero;
+	math::float3 scale = math::float3::zero;
+	math::float4x4 local_transform = math::float4x4::zero;
 };
 
 #endif // !__COMPONENTTRANSFORM_H__

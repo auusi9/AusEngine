@@ -1,26 +1,42 @@
 #include "ComponentMesh.h"
 #include "Application.h"
+
+
 #include "ModuleRenderer3D.h"
 #include "Imgui\imgui.h"
-#include "ModuleLoadMeshes.h"
+
+#include "ComponentTransform.h"
+#include "ComponentMaterial.h"
+#include "GameObject.h"
+#include "MathGeoLib\src\MathGeoLib.h"
 using namespace std;
+
 
 ComponentMesh::ComponentMesh(GameObject* go) : Component(Meshes,go)
 {
-	Mesh _mesh;
-	mesh.push_back(_mesh);
+	MeshT _mesh;
+	Cmesh = _mesh;
 }
 
 
 ComponentMesh::~ComponentMesh()
 {
-	mesh.clear();
 }
 
 //Renders the current Mesh
 bool ComponentMesh::Update()
 {
-	App->renderer3D->RenderMesh(mesh);
+	ComponentTransform* transform = (ComponentTransform*)gameObject->GetComponent(Transform);
+	ComponentMaterial* material = (ComponentMaterial*)gameObject->GetComponent(Material);
+
+	if (transform == nullptr && material == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, 0);
+	else if( material == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), 0);
+	else if (transform == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, material->textureId);
+	else
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
 	return true;
 }
 
@@ -28,31 +44,27 @@ void ComponentMesh::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
-		int num_vertices = 0;
-		int num_indices = 0;
-		for (vector<Mesh>::iterator item = mesh.begin(); item != mesh.end(); ++item)
-		{
-			num_vertices += (*item).num_vertices;
-			num_indices += (*item).num_indices;
-		}
-		int num_triangles = num_indices/3;
+		
+		int num_triangles = Cmesh.num_indices/3;
 
 		
 		ImGui::Text("Triangles: %d", num_triangles);
-		ImGui::Text("Vertices: %d", num_triangles);
-		ImGui::Text("Indices: %d", num_indices);
+		ImGui::Text("Vertices: %d", Cmesh.num_vertices);
+		ImGui::Text("Indices: %d", Cmesh.num_indices);
+		
 	}
 }
 //If there is no mesh adds a mesh if there is a mesh changes the current Mesh
-bool ComponentMesh::AddMesh(vector<Mesh> _mesh)
+bool ComponentMesh::AddMesh(MeshT _mesh)
 {
-	mesh = _mesh;
+	Cmesh = _mesh;
 	return true;
 }
 
 //Deletes the current Mesh
 bool ComponentMesh::DeleteMesh()
 {
-	mesh.clear();
+	MeshT _mesh;
+	Cmesh = _mesh;
 	return true;
 }

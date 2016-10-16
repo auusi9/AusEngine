@@ -79,7 +79,7 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 			flag = ImGuiTreeNodeFlags_Selected;
 
 		if (gameObject->goChilds.size() == 0)
-			flag |= ImGuiTreeNodeFlags_Bullet;
+			flag |= ImGuiTreeNodeFlags_Leaf;
 		
 
 			if (ImGui::TreeNodeEx(gameObject->name.data(), flag | ImGuiTreeNodeFlags_OpenOnArrow))
