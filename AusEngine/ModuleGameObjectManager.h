@@ -25,7 +25,7 @@ public:
 
 	void InspectorPanel();
 
-	GameObject* focus_go= nullptr;
+	GameObject* focusGo= nullptr;
 private:
 	uint numObjects = 0;
 	

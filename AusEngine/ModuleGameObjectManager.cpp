@@ -75,7 +75,7 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 {
 		uint flag = 0;
 
-		if (focus_go == gameObject)
+		if (focusGo == gameObject)
 			flag |= ImGuiTreeNodeFlags_Selected;
 
 		if (gameObject->goChilds.size() == 0)
@@ -85,7 +85,7 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 		{
 			if (ImGui::IsItemClicked(0))
 			{
-				focus_go = gameObject;
+				focusGo = gameObject;
 			}
 
 			for (vector<GameObject*>::iterator item = gameObject->goChilds.begin(); item != gameObject->goChilds.end(); ++item)
@@ -99,9 +99,9 @@ void ModuleGameObjectManager::InspectorPanel()
 {
 	ImGui::Begin("Inspector");
 
-	if (focus_go != nullptr)
+	if (focusGo != nullptr)
 	{
-		for (vector<Component*>::iterator item = focus_go->Components.begin(); item != focus_go->Components.end(); ++item)
+		for (vector<Component*>::iterator item = focusGo->Components.begin(); item != focusGo->Components.end(); ++item)
 			(*item)->OnEditor();
 	}
 		

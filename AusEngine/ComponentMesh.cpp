@@ -37,6 +37,7 @@ bool ComponentMesh::Update()
 		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, material->textureId);
 	else
 		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
+
 	return true;
 }
 

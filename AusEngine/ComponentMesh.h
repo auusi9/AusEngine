@@ -16,8 +16,6 @@ public:
 	bool DeleteMesh();
 	void OnEditor();
 	MeshT Cmesh;
-private:
-	
 };
 
 #endif // !__COMPONENTMESH_H__

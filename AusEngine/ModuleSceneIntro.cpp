@@ -12,16 +12,16 @@ ModuleSceneIntro::~ModuleSceneIntro()
 
 bool ModuleSceneIntro::Start()
 {
-
 	bool ret = true;
-	sceneObjects = App->MeshD->Load("Assets/FBX/Town/Street environment_V01.fbx");
+
+	sceneObjects = App->MeshD->Load("Assets/FBX/Street environment_V01.fbx");
 
 	return ret;
 }
 
 bool ModuleSceneIntro::CleanUp()
 {
-	LOG("Unloading Intro scene");
+	sceneObjects.clear();
 	return true;
 }
 update_status ModuleSceneIntro::PreUpdate(float dt)
