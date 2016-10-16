@@ -11,16 +11,20 @@ public:
 	GameObject(GameObject* parent);
 	~GameObject();
 
-	char* name = "GameObject";
+	std::string name;
 
 	GameObject* gameobject = this;
 	GameObject* root;
 	std::vector<GameObject*> goChilds;
 
 	bool Start();
-	Component* AddComponent(componentType _type);
 	bool Update();
 	bool CleanUp();
+
+	bool RemoveChild(GameObject* child);
+
+	Component* AddComponent(componentType _type);
+	Component* GetComponent(componentType _type);
 	std::vector<Component*> Components;
 
 private:

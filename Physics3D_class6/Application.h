@@ -15,6 +15,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleLoadMeshes.h"
 #include "ModuleLoadTextures.h"
+#include "ModuleGameObjectManager.h"
 
 class Application
 {
@@ -30,6 +31,7 @@ public:
 	ModuleFileSystem* fs;
 	ModuleLoadMeshes* MeshD;
 	ModuleLoadTextures* tex;
+	ModuleGameObjectManager* go;
 private:
 
 	Timer	ms_timer;
@@ -57,3 +59,6 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 };
+
+//To get acces to app from outside modules
+extern Application* App;

@@ -1,11 +1,13 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "Glew\include\glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "ModuleLoadMeshes.h"
 
-
+#pragma comment (lib, "Glew/libx86/glew32.lib")
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
@@ -161,4 +163,18 @@ void ModuleRenderer3D::OnResize(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+}
+
+
+void ModuleRenderer3D::RenderMesh(std::vector<Mesh> mesh) 
+{
+	for (std::vector<Mesh>::iterator item = mesh.begin(); item != mesh.end(); ++item)
+	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, (*item).id_indices);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+
+		glDrawElements(GL_TRIANGLES, (*item).num_indices, GL_UNSIGNED_INT, NULL);
+		glDisableClientState(GL_VERTEX_ARRAY);
+	}
 }

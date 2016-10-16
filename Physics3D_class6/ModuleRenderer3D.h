@@ -18,6 +18,8 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 	
+	void RenderMesh(std::vector<Mesh> mesh);
+
 	void OnResize(int width, int height);
 
 public:

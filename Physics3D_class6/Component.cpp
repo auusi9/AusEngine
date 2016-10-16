@@ -1,13 +1,14 @@
 #include "Component.h"
+#include "GameObject.h"
 
 Component::Component()
 {
-
 }
 
-Component::Component(componentType _type)
+Component::Component(componentType _type, GameObject* go)
 {
-
+	type = _type;
+	gameObject = go;
 }
 
 Component::~Component()
@@ -31,4 +32,9 @@ bool Component::Update()
 {
 
 	return true;
+}
+
+void Component::OnEditor()
+{
+
 }

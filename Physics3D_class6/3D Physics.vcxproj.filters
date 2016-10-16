@@ -25,6 +25,12 @@
     <Filter Include="Sources\Containers\MathGeoLib">
       <UniqueIdentifier>{85d05de1-ddb6-45f2-8d15-7681bd16ecb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Helpers\GameObjects">
+      <UniqueIdentifier>{c07d49d2-971c-422a-9f18-446e8e370c0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Helpers\GameObjects\Components">
+      <UniqueIdentifier>{aa6529d4-906f-4750-a572-89364077bb44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -315,17 +321,20 @@
     <ClInclude Include="ModuleLoadTextures.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Sources\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleGameObjectManager.h">
       <Filter>Sources\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\Helpers\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClInclude>
     <ClInclude Include="ComponentTransform.h">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMesh.h">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,17 +503,20 @@
     <ClCompile Include="ModuleLoadTextures.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Sources\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleGameObjectManager.cpp">
       <Filter>Sources\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\Helpers\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClCompile>
     <ClCompile Include="ComponentTransform.cpp">
-      <Filter>Sources\Modules</Filter>
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp">
+      <Filter>Sources\Helpers\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
