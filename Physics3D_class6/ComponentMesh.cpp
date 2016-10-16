@@ -11,7 +11,7 @@
 #include "MathGeoLib\src\MathGeoLib.h"
 using namespace std;
 
-
+//Initialize the mesh for security
 ComponentMesh::ComponentMesh(GameObject* go) : Component(Meshes,go)
 {
 	MeshT _mesh;
@@ -44,14 +44,11 @@ void ComponentMesh::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Mesh"))
 	{
-		
-		int num_triangles = Cmesh.num_indices/3;
+		int numTriangles = Cmesh.numIndices/3;
 
-		
-		ImGui::Text("Triangles: %d", num_triangles);
-		ImGui::Text("Vertices: %d", Cmesh.num_vertices);
-		ImGui::Text("Indices: %d", Cmesh.num_indices);
-		
+		ImGui::Text("Triangles: %d", numTriangles);
+		ImGui::Text("Vertices: %d", Cmesh.numVertices);
+		ImGui::Text("Indices: %d", Cmesh.numIndices);
 	}
 }
 //If there is no mesh adds a mesh if there is a mesh changes the current Mesh

@@ -8,12 +8,10 @@ using namespace std;
 
 ModuleGameObjectManager::ModuleGameObjectManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-
 }
 
 ModuleGameObjectManager::~ModuleGameObjectManager()
 {
-
 }
 
 
@@ -50,13 +48,15 @@ GameObject* ModuleGameObjectManager::AddGameObject(GameObject* parent)
 
 		object = new GameObject(parent);
 		parent->goChilds.push_back(object);
-
+		numObjects++;
+		object->name += std::to_string(numObjects);
 	return object;
 }
 
 //Removes a specific gameObject from the scene
 bool ModuleGameObjectManager::RemoveGameObject(GameObject* go)
 {
+	numObjects--;
 	return go->root->RemoveChild(go);
 }
 
@@ -76,38 +76,35 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 		uint flag = 0;
 
 		if (focus_go == gameObject)
-			flag = ImGuiTreeNodeFlags_Selected;
+			flag |= ImGuiTreeNodeFlags_Selected;
 
 		if (gameObject->goChilds.size() == 0)
-			flag |= ImGuiTreeNodeFlags_Leaf;
-		
+			flag |= ImGuiTreeNodeFlags_Bullet;
 
-			if (ImGui::TreeNodeEx(gameObject->name.data(), flag | ImGuiTreeNodeFlags_OpenOnArrow))
+		if (ImGui::TreeNodeEx(gameObject->name.data(), flag))
+		{
+			if (ImGui::IsItemClicked(0))
 			{
-				if (ImGui::IsItemClicked(0))
-				{
-					focus_go = gameObject;
-				}
-				for (vector<GameObject*>::iterator item = gameObject->goChilds.begin(); item != gameObject->goChilds.end(); ++item)
-					HierarchyShowChilds(*item);
-
-				ImGui::TreePop();
+				focus_go = gameObject;
 			}
+
+			for (vector<GameObject*>::iterator item = gameObject->goChilds.begin(); item != gameObject->goChilds.end(); ++item)
+				HierarchyShowChilds(*item);
+
+			ImGui::TreePop();
+		}
 }
 
 void ModuleGameObjectManager::InspectorPanel() 
 {
 	ImGui::Begin("Inspector");
 
-	if(focus_go != nullptr)
-		InspectorShowComponents(focus_go);
+	if (focus_go != nullptr)
+	{
+		for (vector<Component*>::iterator item = focus_go->Components.begin(); item != focus_go->Components.end(); ++item)
+			(*item)->OnEditor();
+	}
+		
 
 	ImGui::End();
-
-}
-
-void ModuleGameObjectManager::InspectorShowComponents(GameObject* gameObject)
-{
-	for (vector<Component*>::iterator item = gameObject->Components.begin(); item != gameObject->Components.end(); ++item)
-		(*item)->OnEditor();
 }

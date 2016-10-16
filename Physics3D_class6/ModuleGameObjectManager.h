@@ -24,9 +24,10 @@ public:
 	void HierarchyShowChilds(GameObject* parent);
 
 	void InspectorPanel();
-	void InspectorShowComponents(GameObject* gameObject);
+
 	GameObject* focus_go= nullptr;
 private:
+	uint numObjects = 0;
 	
 };
 

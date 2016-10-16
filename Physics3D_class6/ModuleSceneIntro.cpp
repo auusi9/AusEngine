@@ -10,21 +10,18 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 ModuleSceneIntro::~ModuleSceneIntro()
 {}
 
-// Load assets
 bool ModuleSceneIntro::Start()
 {
 
 	bool ret = true;
-	App->MeshD->LoadMesh("Assets/FBX/Town/Street environment_V01.fbx");
+	sceneObjects = App->MeshD->Load("Assets/FBX/Town/Street environment_V01.fbx");
 
 	return ret;
 }
 
-// Load assets
 bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
-
 	return true;
 }
 update_status ModuleSceneIntro::PreUpdate(float dt)
@@ -32,11 +29,8 @@ update_status ModuleSceneIntro::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// Update: draw background
 update_status ModuleSceneIntro::Update(float dt)
 {
-	//Plane(0, 0, 0, 0).Render();
-
 	return UPDATE_CONTINUE;
 }
 

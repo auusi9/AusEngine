@@ -69,6 +69,10 @@ bool GameObject::Update()
 Component* GameObject::AddComponent(componentType _type)
 {
 	Component* component = NULL;
+	//Check there are no duplicate Components
+	component = GetComponent(_type);
+	if (component != nullptr)
+		return component;
 
 	switch (_type)
 	{

@@ -7,6 +7,7 @@
 
 struct PhysBody3D;
 class Cube;
+class GameObject;
 
 class ModuleSceneIntro : public Module
 {
@@ -22,15 +23,5 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
-	uint my_id;
-	uint my_indices;
-
-	uint id_vertices = 0; 
-	uint num_indices = 0;
-	uint* indices = nullptr;
-	uint id_indices = 0; 
-	uint num_vertices = 0;
-	float* vertices = nullptr;
-
-	uint texture;
+	std::vector<GameObject*> sceneObjects;
 };

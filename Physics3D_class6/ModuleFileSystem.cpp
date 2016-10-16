@@ -8,13 +8,10 @@
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	// need to be created before Awake so other modules can use it
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(base_path);
 	SDL_free(base_path);
 
-	// By default we include executable's own directory
-	// without this we won't be able to find config.xml :-(
 	AddPath(".");
 }
 
@@ -30,11 +27,6 @@ bool ModuleFileSystem::Init()
 	LOG("Loading File System");
 	bool ret = true;
 
-	// Add all paths in configuration in order
-	//AddPath() manually
-
-
-	// Ask SDL for a write dir
 	char* write_path = SDL_GetPrefPath("AusEngine-UPC", "AusEngine");
 
 	if (PHYSFS_setWriteDir(write_path) == 0)
@@ -43,7 +35,6 @@ bool ModuleFileSystem::Init()
 	}
 	else
 	{
-		// We add the writing directory as a reading directory too with speacial mount point
 		LOG("Writing directory is %s\n", write_path);
 		AddPath(write_path, GetSaveDirectory());
 	}

@@ -3,7 +3,10 @@
 #include "GameObject.h"
 #include "ModuleGameObjectManager.h"
 #include "Component.h"
-
+#include "ComponentTransform.h"
+#include "ComponentMaterial.h"
+#include "ComponentMesh.h"
+#include "MathGeoLib\src/MathGeoLib.h"
 #include "Glew\include\glew.h"
 
 #include "Assimp\include\cimport.h"
@@ -20,10 +23,7 @@
 
 #pragma comment (lib, "Assimp/libx86/assimp.lib")
 #pragma comment (lib, "Glew/libx86/glew32.lib")
-#include "ComponentTransform.h"
-#include "ComponentMaterial.h"
-#include "ComponentMesh.h"
-#include "MathGeoLib\src/MathGeoLib.h"
+
 using namespace std;
 
 
@@ -35,179 +35,49 @@ ModuleLoadMeshes::~ModuleLoadMeshes()
 
 bool ModuleLoadMeshes::Init()
 {
-	//Use console to LOG debug stuff from assimp
-	//struct aiLogStrem stream;
-	//stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullprt);
-	//aiAttachLogStream(&stream);
-
-	//Initialize DevIL
 	ilInit();
-	iluInit();
 	ilutInit();
-
 	ilutRenderer(ILUT_OPENGL);
-
+	
 	return true;
 }
 
 bool ModuleLoadMeshes::CleanUp()
 {
-	//Stop debbuging through the console
-	//aiDetachAllLogStreams();
-
 	return true;
 }
 
-vector<MeshT> ModuleLoadMeshes::LoadMesh(const char* path)
+vector<GameObject*> ModuleLoadMeshes::Load(const char* path)
 {
-	vector<MeshT> full_mesh;
+	vector<GameObject*> gameObjects;
 
 	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		aiNode* root_node = scene->mRootNode;
+		aiNode* rootNode = scene->mRootNode;
 
-		GameObject* g_object = App->go->AddGameObject(nullptr);
+		GameObject* parent = App->go->AddGameObject(nullptr);
+		gameObjects.push_back(parent);
 
-		//USE NODES TO ITERATE ALL THE SCENE
-		for (int i = 0; i < root_node->mNumChildren; i++)
+		for (int i = 0; i < rootNode->mNumChildren; ++i)
 		{
-			LoadCurrentNode(scene, root_node->mChildren[i], g_object, path);
+			GameObject* child = LoadMesh(scene, rootNode->mChildren[i], path, parent);
+			gameObjects.push_back(child);
 		}
 
 		aiReleaseImport(scene);
 	}
-	else
-		LOG("Error loading scene %s", path);
 
-	return full_mesh;
+	return gameObjects;
 }
 
-void ModuleLoadMeshes::LoadCurrentNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path)
+GameObject* ModuleLoadMeshes::LoadMesh(const aiScene* scene, aiNode* node, const char* path, GameObject* parent)
 {
-	GameObject* g_object = App->go->AddGameObject(parent);
+	GameObject* child = App->go->AddGameObject(parent);
 
-	if (node->mNumMeshes > 0)
-	{
-		for (int i = 0; i < node->mNumMeshes; i++)
-		{
-			aiMesh* mesh_to_load = scene->mMeshes[node->mMeshes[i]];
-			MeshT mesh = MeshT();
-
-			//VERTICES
-			mesh.num_vertices = mesh_to_load->mNumVertices;
-			mesh.vertices = new uint[mesh.num_vertices * 3];
-			memcpy(mesh.vertices, mesh_to_load->mVertices, sizeof(float)*mesh.num_vertices * 3);
-
-			//Vertices buffer
-			glGenBuffers(1, (GLuint*)&(mesh.id_vertices));
-			glBindBuffer(GL_ARRAY_BUFFER, mesh.id_vertices);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.num_vertices, mesh.vertices, GL_STATIC_DRAW);
-
-			//INDICES
-			if (mesh_to_load->HasFaces())
-			{
-				mesh.num_indices = mesh_to_load->mNumFaces * 3;
-				mesh.indices = new uint[mesh.num_indices];
-				for (uint j = 0; j < mesh_to_load->mNumFaces; j++)
-				{
-					if (mesh_to_load->mFaces[j].mNumIndices != 3)
-					{
-						LOG("WARNING: geometry with indices != 3 found");
-					}
-					else
-					{
-						memcpy(&mesh.indices[j * 3], mesh_to_load->mFaces[j].mIndices, 3 * sizeof(uint));
-					}
-				}
-				//Indices buffer
-				glGenBuffers(1, (GLuint*)&(mesh.id_indices));
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.id_indices);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.num_indices, mesh.indices, GL_STATIC_DRAW);
-			}
-
-			//NORMALS
-			if (mesh_to_load->HasNormals())
-			{
-				mesh.num_normals = mesh_to_load->mNumVertices;
-				mesh.normals = new float[mesh.num_normals * 3];
-				memcpy(mesh.normals, mesh_to_load->mNormals, sizeof(float) * mesh.num_normals * 3);
-
-				//Normals buffer
-				glGenBuffers(1, (GLuint*)&(mesh.id_normals));
-				glBindBuffer(GL_ARRAY_BUFFER, mesh.id_normals);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.num_normals, mesh.normals, GL_STATIC_DRAW);
-			}
-
-			//UVS
-			if (mesh_to_load->HasTextureCoords(mesh.id_uvs))
-			{
-				mesh.num_uvs = mesh_to_load->mNumVertices;
-				mesh.uvs = new float[mesh.num_uvs * 2];
-				for (int i = 0; i < mesh_to_load->mNumVertices; ++i)
-				{
-					memcpy(&mesh.uvs[i * 2], &mesh_to_load->mTextureCoords[0][i].x, sizeof(float));
-					memcpy(&mesh.uvs[(i * 2) + 1], &mesh_to_load->mTextureCoords[0][i].y, sizeof(float));
-				}
-
-				//UVs buffer
-				glGenBuffers(1, (GLuint*)&(mesh.id_uvs));
-				glBindBuffer(GL_ARRAY_BUFFER, mesh.id_uvs);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh.num_uvs, mesh.uvs, GL_STATIC_DRAW);
-			}
-
-			//Transformation
-			aiVector3D translation;
-			aiVector3D scaling;
-			aiQuaternion rotation;
-
-			node->mTransformation.Decompose(scaling, rotation, translation);
-
-			float3 pos(translation.x, translation.y, translation.z);
-			float3 scale(scaling.x, scaling.y, scaling.z);
-			Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
-
-			ComponentTransform* c_transform = (ComponentTransform*)g_object->AddComponent(Transform);
-			c_transform->SetPosition(pos);
-			c_transform->SetRotationQuat(rot);
-			c_transform->SetScale(scale);
-
-			ComponentMesh* c_mesh = (ComponentMesh*)g_object->AddComponent(Meshes);
-			c_mesh->AddMesh(mesh);
-
-			if (scene->HasMaterials())
-			{
-				aiMaterial* material = scene->mMaterials[mesh_to_load->mMaterialIndex];
-				//uint numTextures = material->GetTextureCount(aiTextureType_DIFFUSE);
-				if (material)
-				{
-					aiString path;
-					material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-
-					if (path.length > 0)
-					{
-						std::string str1 = path.data;
-						str1.erase(0, str1.find_last_of("\\") + 1);
-
-						std::string str2 = "../Game/Assets/Textures/";
-						str2 += str1;
-
-					
-						ComponentMaterial* c_material = (ComponentMaterial*)g_object->AddComponent(Material);
-
-						c_material->textureId = LoadTexture(str2.c_str());
-						LOG(str2.c_str());
-						str1.clear();
-						str2.clear();
-					}
-
-				}
-			}
-		}
-	}
-
-	else
+	//Need to also create gameObjects for the ones that don't have mesh in order to Respect the hierarchy and the local Positions
+	if (node->mNumMeshes <= 0)
 	{
 		aiVector3D translation;
 		aiVector3D scaling;
@@ -215,21 +85,122 @@ void ModuleLoadMeshes::LoadCurrentNode(const aiScene* scene, aiNode* node, GameO
 
 		node->mTransformation.Decompose(scaling, rotation, translation);
 
-		float3 pos(translation.x, translation.y, translation.z);
+		float3 position(translation.x, translation.y, translation.z);
 		float3 scale(scaling.x, scaling.y, scaling.z);
-		Quat rot(rotation.x, rotation.y, rotation.z, rotation.w);
+		Quat _rotation(rotation.x, rotation.y, rotation.z, rotation.w);
 
+		ComponentTransform* Ctransform = (ComponentTransform*)child->AddComponent(Transform);
+		Ctransform->SetPosition(position);
+		Ctransform->SetRotationQuat(_rotation);
+		Ctransform->SetScale(scale);
+	}
+	else
+	{
+		for (int i = 0; i < node->mNumMeshes; i++)
+		{
+			aiMesh* aimesh = scene->mMeshes[node->mMeshes[i]];
+			MeshT mesh = MeshT();
 
-		ComponentTransform* c_transform = (ComponentTransform*)g_object->AddComponent(Transform);
-		c_transform->SetPosition(pos);
-		c_transform->SetRotationQuat(rot);
-		c_transform->SetScale(scale);
+			mesh.numVertices = aimesh->mNumVertices;
+			mesh.vertices = new uint[mesh.numVertices * 3];
+			memcpy(mesh.vertices, aimesh->mVertices, sizeof(float)*mesh.numVertices * 3);
+
+			glGenBuffers(1, (GLuint*)&(mesh.idVertices));
+			glBindBuffer(GL_ARRAY_BUFFER, mesh.idVertices);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.numVertices, mesh.vertices, GL_STATIC_DRAW);
+
+			if (aimesh->HasFaces())
+			{
+				mesh.numIndices = aimesh->mNumFaces * 3;
+				mesh.indices = new uint[mesh.numIndices];
+				for (uint j = 0; j < aimesh->mNumFaces; j++)
+				{
+					if (aimesh->mFaces[j].mNumIndices == 3)
+					{
+						memcpy(&mesh.indices[j * 3], aimesh->mFaces[j].mIndices, 3 * sizeof(uint));
+					}
+				}
+
+				glGenBuffers(1, (GLuint*)&(mesh.idIndices));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.idIndices);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * mesh.numIndices, mesh.indices, GL_STATIC_DRAW);
+			}
+
+			if (aimesh->HasTextureCoords(mesh.idUvs))
+			{
+				mesh.numUvs = aimesh->mNumVertices;
+				mesh.uvs = new float[mesh.numUvs * 2];
+
+				for (int i = 0; i < aimesh->mNumVertices; ++i)
+				{
+					memcpy(&mesh.uvs[i * 2], &aimesh->mTextureCoords[0][i].x, sizeof(float));
+					memcpy(&mesh.uvs[(i * 2) + 1], &aimesh->mTextureCoords[0][i].y, sizeof(float));
+				}
+
+				glGenBuffers(1, (GLuint*)&(mesh.idUvs));
+				glBindBuffer(GL_ARRAY_BUFFER, mesh.idUvs);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * mesh.numUvs, mesh.uvs, GL_STATIC_DRAW);
+			}
+
+			if (aimesh->HasNormals())
+			{
+				mesh.numNormals = aimesh->mNumVertices;
+				mesh.normals = new float[mesh.numNormals * 3];
+				memcpy(mesh.normals, aimesh->mNormals, sizeof(float) * mesh.numNormals * 3);
+
+				glGenBuffers(1, (GLuint*)&(mesh.idNormals));
+				glBindBuffer(GL_ARRAY_BUFFER, mesh.idNormals);
+				glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * mesh.numNormals, mesh.normals, GL_STATIC_DRAW);
+			}
+
+			aiVector3D translation;
+			aiVector3D scaling;
+			aiQuaternion rotation;
+
+			node->mTransformation.Decompose(scaling, rotation, translation);
+
+			float3 position(translation.x, translation.y, translation.z);
+			float3 scale(scaling.x, scaling.y, scaling.z);
+			Quat _rotation(rotation.x, rotation.y, rotation.z, rotation.w);
+
+			ComponentTransform* Ctransform = (ComponentTransform*)child->AddComponent(Transform);
+			Ctransform->SetPosition(position);
+			Ctransform->SetRotationQuat(_rotation);
+			Ctransform->SetScale(scale);
+
+			ComponentMesh* Cmesh = (ComponentMesh*)child->AddComponent(Meshes);
+			Cmesh->AddMesh(mesh);
+
+			aiMaterial* material = scene->mMaterials[aimesh->mMaterialIndex];
+
+			if (material)
+			{
+				aiString path;
+				material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
+
+				if (path.length > 0)
+				{
+					std::string basePath = "../Game/Assets/Textures/";
+					std::string finalpath = path.data;
+					finalpath.erase(0, finalpath.find_last_of("\\") + 1);
+					basePath += finalpath;
+
+					ComponentMaterial* c_material = (ComponentMaterial*)child->AddComponent(Material);
+					c_material->textureId = LoadTexture(basePath.c_str());
+
+					finalpath.clear();
+					basePath.clear();
+				}
+			}
+		}
 	}
 
 	for (int i = 0; i < node->mNumChildren; i++)
 	{
-		LoadCurrentNode(scene, node->mChildren[i], g_object, path);
+		LoadMesh(scene, node->mChildren[i], path, child);
 	}
+
+	return child;
 }
 
 uint ModuleLoadMeshes::LoadTexture(const char* path)

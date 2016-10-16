@@ -10,6 +10,7 @@ ComponentTransform::ComponentTransform(GameObject* go) : Component(Transform,go)
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 }
 
+//By the Moment this constructors are usless
 ComponentTransform::ComponentTransform(math::float3 _position, math::float3 _rotationAngles, math::float3 _scale, GameObject* go) : Component(Transform,go)
 {
 	position = _position;
@@ -38,16 +39,15 @@ ComponentTransform::ComponentTransform(math::float3 _position, GameObject* go) :
 
 ComponentTransform::~ComponentTransform()
 {
-
 }
 
 
 bool ComponentTransform::Update()
 {
-
 	return true;
 }
 
+//Shows Position, Euler angles in degrees and scale, and allows the user to modify them
 void ComponentTransform::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Transform"))
@@ -61,13 +61,12 @@ void ComponentTransform::OnEditor()
 		{
 			SetRotation(angles);
 		}
+
 		if (ImGui::DragFloat3("##sca", scale.ptr()))
 		{
 			SetScale(scale);
 		}
 	}
-
-
 }
 
 void ComponentTransform::SetPosition(math::float3 _position)
@@ -137,6 +136,7 @@ math::float4x4 ComponentTransform::GetWorldTransform() const
 
 	return tmptransform;
 }
+
 math::float4x4 ComponentTransform::GetLocalTransform() const
 {
 	return local_transform;

@@ -10,20 +10,20 @@ class GameObject;
 
 struct MeshT
 {
-	uint id_vertices;
-	uint num_vertices;
+	uint idVertices = 0;
+	uint numVertices = 0;
 	uint* vertices = nullptr;
 
-	uint id_indices;
-	uint num_indices;
+	uint idIndices = 0;
+	uint numIndices = 0;
 	uint* indices = nullptr;
 
-	uint id_normals = 0;
-	uint num_normals = 0;
+	uint idNormals = 0;
+	uint numNormals = 0;
 	float* normals = nullptr;
 
-	uint id_uvs = 0;
-	uint num_uvs = 0;
+	uint idUvs = 0;
+	uint numUvs = 0;
 	float* uvs = nullptr;
 };
 
@@ -36,8 +36,8 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	std::vector<MeshT> LoadMesh(const char* path);
-	void LoadCurrentNode(const aiScene* scene, aiNode* node, GameObject* parent, const char* path);
+	std::vector<GameObject*> Load(const char* path);
+	GameObject* LoadMesh(const aiScene* scene, aiNode* node, const char* path, GameObject* parent);
 	uint LoadTexture(const char* path);
 };
 

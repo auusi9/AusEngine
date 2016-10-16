@@ -10,8 +10,6 @@ class ComponentMesh : public Component
 public:
 	ComponentMesh(GameObject* go);
 	~ComponentMesh();
-
-	componentType type;
 	
 	bool Update();
 	bool AddMesh(MeshT _mesh);

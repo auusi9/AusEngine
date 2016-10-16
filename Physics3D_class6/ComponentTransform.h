@@ -12,8 +12,6 @@ public:
 	ComponentTransform(math::float3 _position, math::float3 _rotation, GameObject* go);
 	ComponentTransform(math::float3 _position, GameObject* go);
 	~ComponentTransform();
-
-	componentType type;
 	
 	bool Update();
 	void OnEditor();

@@ -12,17 +12,17 @@ ComponentMaterial::~ComponentMaterial()
 {
 }
 
-//Renders the current Mesh
+
 bool ComponentMaterial::Update()
 {
-
 	return true;
 }
 
+//If there is a texture, shows the Image on the Inspector
 void ComponentMaterial::OnEditor()
 {
 	if (ImGui::CollapsingHeader("Material"))
 	{
-		ImGui::Image((ImTextureID)textureId, ImVec2(250, 250));
+		ImGui::Image((ImTextureID)textureId, ImVec2(200, 200));
 	}
 }

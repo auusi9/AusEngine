@@ -4,16 +4,16 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "Bullet/src/btBulletDynamicsCommon.h"
-#include "Bullet\src\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h"
+#include "Bullet/src/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 #ifdef _DEBUG
-	#pragma comment (lib, "Bullet/bin/BulletDynamics_debug.lib")
-	#pragma comment (lib, "Bullet/bin/BulletCollision_debug.lib")
-	#pragma comment (lib, "Bullet/bin/LinearMath_debug.lib")
+	#pragma comment (lib, "Bullet/libx86/BulletDynamics_debug.lib")
+	#pragma comment (lib, "Bullet/libx86/BulletCollision_debug.lib")
+	#pragma comment (lib, "Bullet/libx86/LinearMath_debug.lib")
 #else
-	#pragma comment (lib, "Bullet/bin/BulletDynamics.lib")
-	#pragma comment (lib, "Bullet/bin/BulletCollision.lib")
-	#pragma comment (lib, "Bullet/bin/LinearMath.lib")
+	#pragma comment (lib, "Bullet/libx86/BulletDynamics.lib")
+	#pragma comment (lib, "Bullet/libx86/BulletCollision.lib")
+	#pragma comment (lib, "Bullet/libx86/LinearMath.lib")
 #endif
 
 
