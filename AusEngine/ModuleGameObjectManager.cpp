@@ -30,7 +30,6 @@ bool ModuleGameObjectManager::CleanUp()
 
 update_status ModuleGameObjectManager::Update(float dt)
 {
-
 	root->Update();
 
 	HierarchyPanel();
@@ -104,7 +103,6 @@ void ModuleGameObjectManager::InspectorPanel()
 		for (vector<Component*>::iterator item = focusGo->Components.begin(); item != focusGo->Components.end(); ++item)
 			(*item)->OnEditor();
 	}
-		
 
 	ImGui::End();
 }

@@ -1,8 +1,11 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
+#include "Globals.h"
 #include <vector>
 class Component;
 enum componentType;
+
+class OBB;
 
 class GameObject
 {
@@ -26,7 +29,10 @@ public:
 	Component* AddComponent(componentType _type);
 	Component* GetComponent(componentType _type);
 	std::vector<Component*> Components;
-
+	
+	math::AABB gBox = math::AABB::AABB();
+	void GenerateBoundingBox(uint* vertices, uint numVertices);
+	
 private:
 
 };

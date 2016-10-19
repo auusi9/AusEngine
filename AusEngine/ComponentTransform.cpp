@@ -1,6 +1,7 @@
 #include "ComponentTransform.h"
 #include "GameObject.h"
 #include "Imgui\imgui.h"
+#include "Math.h"
 
 ComponentTransform::ComponentTransform(GameObject* go) : Component(Transform,go)
 {
@@ -73,6 +74,9 @@ void ComponentTransform::SetPosition(math::float3 _position)
 {
 	position = _position;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
+	world_transform = GetWorldTransform();
+	tmpObb = gameObject->gBox.Transform(world_transform);
+	gameObject->gBox.Enclose(tmpObb);
 }
 
 void ComponentTransform::SetRotation(math::float3 _rotationAngles)
@@ -81,17 +85,26 @@ void ComponentTransform::SetRotation(math::float3 _rotationAngles)
 	anglesRad = DegToRad(_rotationAngles);
 	rotation = rotation.FromEulerXYZ(anglesRad.z, anglesRad.y, anglesRad.x);
 	local_transform = local_transform.FromTRS(position, rotation, scale);
+	world_transform = GetWorldTransform();
+	tmpObb = gameObject->gBox.Transform(world_transform);
+	gameObject->gBox.Enclose(tmpObb);
 }
 void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 {
 	angles = _rotation.ToEulerXYZ();
 	rotation = _rotation;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
+	world_transform = GetWorldTransform();
+	tmpObb = gameObject->gBox.Transform(world_transform);
+	gameObject->gBox.Enclose(tmpObb);
 }
 void ComponentTransform::SetScale(math::float3 _scale)
 {
 	scale = _scale;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
+	world_transform = GetWorldTransform();
+	tmpObb = gameObject->gBox.Transform(world_transform);
+	gameObject->gBox.Enclose(tmpObb);
 }
 
 math::float3 ComponentTransform::GetPosition() const

@@ -1,9 +1,9 @@
 #include "GameObject.h"
 #include "Component.h"
-#include "Globals.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "Math.h"
 using namespace std;
 
 GameObject::GameObject()
@@ -127,4 +127,10 @@ bool GameObject::RemoveChild(GameObject* child)
 	}
 
 	return ret;
+}
+
+void GameObject::GenerateBoundingBox(uint* vertices,uint numVertices)
+{
+	gBox.SetNegativeInfinity();
+	gBox.Enclose((float3*)vertices, numVertices);
 }

@@ -16,6 +16,7 @@ ComponentMesh::ComponentMesh(GameObject* go) : Component(Meshes,go)
 {
 	MeshT _mesh;
 	Cmesh = _mesh;
+	
 }
 
 
@@ -56,6 +57,7 @@ void ComponentMesh::OnEditor()
 bool ComponentMesh::AddMesh(MeshT _mesh)
 {
 	Cmesh = _mesh;
+	gameObject->GenerateBoundingBox(Cmesh.vertices, Cmesh.numVertices);
 	return true;
 }
 

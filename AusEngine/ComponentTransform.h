@@ -37,6 +37,8 @@ private:
 	math::float3 anglesRad = math::float3::zero;
 	math::float3 scale = math::float3::zero;
 	math::float4x4 local_transform = math::float4x4::zero;
+	math::float4x4 world_transform = math::float4x4::zero;
+	math::OBB tmpObb;
 };
 
 #endif // !__COMPONENTTRANSFORM_H__
