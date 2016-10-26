@@ -39,6 +39,9 @@ bool ComponentMesh::Update()
 	else
 		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
 
+	App->renderer3D->RenderDebugAABB(transform->GetAABB(), transform->GetWorldTransform());
+
+
 	return true;
 }
 
@@ -57,7 +60,8 @@ void ComponentMesh::OnEditor()
 bool ComponentMesh::AddMesh(MeshT _mesh)
 {
 	Cmesh = _mesh;
-	gameObject->GenerateBoundingBox(Cmesh.vertices, Cmesh.numVertices);
+	ComponentTransform* transform = (ComponentTransform*)gameObject->GetComponent(Transform);
+	transform->GenerateBoundingBox(Cmesh.vertices, Cmesh.numVertices);
 	return true;
 }
 

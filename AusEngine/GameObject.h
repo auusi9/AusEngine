@@ -4,9 +4,7 @@
 #include <vector>
 class Component;
 enum componentType;
-
-class OBB;
-
+class AABB;
 class GameObject
 {
 public:
@@ -30,7 +28,7 @@ public:
 	Component* GetComponent(componentType _type);
 	std::vector<Component*> Components;
 	
-	math::AABB gBox = math::AABB::AABB();
+	
 	void GenerateBoundingBox(uint* vertices, uint numVertices);
 	
 private:

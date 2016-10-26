@@ -2,6 +2,7 @@
 #include "ModuleLoadMeshes.h"
 #include "GameObject.h"
 #include "ModuleGameObjectManager.h"
+#include "ModuleFileSystem.h"
 #include "Component.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
@@ -50,8 +51,10 @@ bool ModuleLoadMeshes::CleanUp()
 vector<GameObject*> ModuleLoadMeshes::Load(const char* path)
 {
 	vector<GameObject*> gameObjects;
+	char* buffer = nullptr;
 
-	const aiScene* scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
+	uint size = App->fs->Load(path, &buffer);
+	const aiScene* scene = aiImportFileFromMemory(buffer,size, aiProcessPreset_TargetRealtime_MaxQuality,buffer);
 
 	if (scene != nullptr && scene->HasMeshes())
 	{

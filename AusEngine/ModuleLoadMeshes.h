@@ -26,7 +26,6 @@ struct MeshT
 	uint numUvs = 0;
 	float* uvs = nullptr;
 
-	math::AABB gBox;
 };
 
 class ModuleLoadMeshes : public Module

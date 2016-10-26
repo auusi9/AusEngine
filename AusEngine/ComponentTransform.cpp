@@ -75,19 +75,19 @@ void ComponentTransform::SetPosition(math::float3 _position)
 	position = _position;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
-	tmpObb = gameObject->gBox.Transform(world_transform);
-	gameObject->gBox.Enclose(tmpObb);
+	tmpObb = gBox.Transform(world_transform);
+	gBox.Enclose(tmpObb);
 }
 
 void ComponentTransform::SetRotation(math::float3 _rotationAngles)
 {
 	angles = _rotationAngles;
 	anglesRad = DegToRad(_rotationAngles);
-	rotation = rotation.FromEulerXYZ(anglesRad.z, anglesRad.y, anglesRad.x);
+	rotation = rotation.FromEulerXYZ(anglesRad.x, anglesRad.y, anglesRad.z);
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
-	tmpObb = gameObject->gBox.Transform(world_transform);
-	gameObject->gBox.Enclose(tmpObb);
+	tmpObb = gBox.Transform(world_transform);
+	gBox.Enclose(tmpObb);
 }
 void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 {
@@ -95,16 +95,16 @@ void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 	rotation = _rotation;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
-	tmpObb = gameObject->gBox.Transform(world_transform);
-	gameObject->gBox.Enclose(tmpObb);
+	tmpObb = gBox.Transform(world_transform);
+	gBox.Enclose(tmpObb);
 }
 void ComponentTransform::SetScale(math::float3 _scale)
 {
 	scale = _scale;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
-	tmpObb = gameObject->gBox.Transform(world_transform);
-	gameObject->gBox.Enclose(tmpObb);
+	tmpObb = gBox.Transform(world_transform);
+	gBox.Enclose(tmpObb);
 }
 
 math::float3 ComponentTransform::GetPosition() const
@@ -153,4 +153,14 @@ math::float4x4 ComponentTransform::GetWorldTransform() const
 math::float4x4 ComponentTransform::GetLocalTransform() const
 {
 	return local_transform;
+}
+
+void ComponentTransform::GenerateBoundingBox(unsigned int* vertices,unsigned int numVertices)
+{
+	gBox.SetNegativeInfinity();
+	gBox.Enclose((float3*)vertices, numVertices);
+}
+math::AABB ComponentTransform::GetAABB() const
+{
+	return gBox;
 }

@@ -129,8 +129,3 @@ bool GameObject::RemoveChild(GameObject* child)
 	return ret;
 }
 
-void GameObject::GenerateBoundingBox(uint* vertices,uint numVertices)
-{
-	gBox.SetNegativeInfinity();
-	gBox.Enclose((float3*)vertices, numVertices);
-}

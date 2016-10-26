@@ -29,6 +29,9 @@ public:
 
 	math::float4x4 GetWorldTransform() const;
 	math::float4x4 GetLocalTransform() const;
+
+	void GenerateBoundingBox(unsigned int* vertices, unsigned int numVertices);
+	math::AABB GetAABB() const;
 private:
 	//Made this private because its the local transform and it depends on the parent.
 	math::float3 position = math::float3::zero;
@@ -38,6 +41,7 @@ private:
 	math::float3 scale = math::float3::zero;
 	math::float4x4 local_transform = math::float4x4::zero;
 	math::float4x4 world_transform = math::float4x4::zero;
+	math::AABB gBox;
 	math::OBB tmpObb;
 };
 
