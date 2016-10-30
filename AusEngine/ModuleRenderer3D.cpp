@@ -195,8 +195,7 @@ void ModuleRenderer3D::RenderDebugAABB(math::AABB box, math::float4x4 transform)
 	static float3 corners[8];
 	box.GetCornerPoints(corners);
 
-	glPushMatrix();
-	glMultMatrixf((GLfloat*)transform.Transposed().v);
+	
 	
 	Color color = { 255,255,0};
 	glColor3f(color.r, color.g, color.b);
@@ -236,5 +235,5 @@ void ModuleRenderer3D::RenderDebugAABB(math::AABB box, math::float4x4 transform)
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnd();
 
-	glPopMatrix();
+
 }

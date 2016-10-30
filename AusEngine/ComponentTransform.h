@@ -42,6 +42,7 @@ private:
 	math::float4x4 local_transform = math::float4x4::zero;
 	math::float4x4 world_transform = math::float4x4::zero;
 	math::AABB gBox;
+	math::AABB TBox;
 	math::OBB tmpObb;
 };
 

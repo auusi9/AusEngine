@@ -76,7 +76,7 @@ void ComponentTransform::SetPosition(math::float3 _position)
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
 	tmpObb = gBox.Transform(world_transform);
-	gBox.Enclose(tmpObb);
+	TBox = tmpObb.MinimalEnclosingAABB();
 }
 
 void ComponentTransform::SetRotation(math::float3 _rotationAngles)
@@ -87,7 +87,7 @@ void ComponentTransform::SetRotation(math::float3 _rotationAngles)
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
 	tmpObb = gBox.Transform(world_transform);
-	gBox.Enclose(tmpObb);
+	TBox = tmpObb.MinimalEnclosingAABB();
 }
 void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 {
@@ -96,7 +96,7 @@ void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
 	tmpObb = gBox.Transform(world_transform);
-	gBox.Enclose(tmpObb);
+	TBox = tmpObb.MinimalEnclosingAABB();
 }
 void ComponentTransform::SetScale(math::float3 _scale)
 {
@@ -104,7 +104,7 @@ void ComponentTransform::SetScale(math::float3 _scale)
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
 	tmpObb = gBox.Transform(world_transform);
-	gBox.Enclose(tmpObb);
+	TBox = tmpObb.MinimalEnclosingAABB();
 }
 
 math::float3 ComponentTransform::GetPosition() const
@@ -159,8 +159,12 @@ void ComponentTransform::GenerateBoundingBox(unsigned int* vertices,unsigned int
 {
 	gBox.SetNegativeInfinity();
 	gBox.Enclose((float3*)vertices, numVertices);
+
+	world_transform = GetWorldTransform();
+	tmpObb = gBox.Transform(world_transform);
+	TBox = tmpObb.MinimalEnclosingAABB();
 }
 math::AABB ComponentTransform::GetAABB() const
 {
-	return gBox;
+	return TBox;
 }

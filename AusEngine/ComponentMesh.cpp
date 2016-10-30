@@ -40,7 +40,7 @@ bool ComponentMesh::Update()
 		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
 
 	App->renderer3D->RenderDebugAABB(transform->GetAABB(), transform->GetWorldTransform());
-
+	
 
 	return true;
 }
