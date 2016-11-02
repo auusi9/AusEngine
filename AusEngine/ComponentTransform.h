@@ -32,6 +32,7 @@ public:
 
 	void GenerateBoundingBox(unsigned int* vertices, unsigned int numVertices);
 	math::AABB GetAABB() const;
+	math::OBB GetOBB() const;
 private:
 	//Made this private because its the local transform and it depends on the parent.
 	math::float3 position = math::float3::zero;

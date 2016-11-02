@@ -3,6 +3,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentCamera.h"
 #include "Math.h"
 using namespace std;
 
@@ -77,12 +78,17 @@ Component* GameObject::AddComponent(componentType _type)
 	switch (_type)
 	{
 		case Transform: component = new ComponentTransform(this); 
+						transform = (ComponentTransform*)component;
 			break;
 
 		case Meshes: component = new ComponentMesh(this);
+					mesh = (ComponentMesh*)component;
 			break;
 
 		case Material: component = new ComponentMaterial(this);
+			break;
+
+		case Camera: component = new ComponentCamera(this);
 			break;
 
 		default: component = new ComponentTransform(this); 

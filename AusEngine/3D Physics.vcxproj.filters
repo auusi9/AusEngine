@@ -339,6 +339,12 @@
     <ClInclude Include="ComponentMaterial.h">
       <Filter>Sources\Modules\Game\GameObjects\Components</Filter>
     </ClInclude>
+    <ClInclude Include="parson.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\Modules\Game\GameObjects\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -522,6 +528,12 @@
       <Filter>Sources\Modules\Game\GameObjects\Components</Filter>
     </ClCompile>
     <ClCompile Include="ComponentMaterial.cpp">
+      <Filter>Sources\Modules\Game\GameObjects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="parson.c">
+      <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentCamera.cpp">
       <Filter>Sources\Modules\Game\GameObjects\Components</Filter>
     </ClCompile>
   </ItemGroup>

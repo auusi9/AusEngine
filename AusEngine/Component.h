@@ -8,7 +8,8 @@ enum componentType
 	Transform,
 	Meshes,
 	Texture,
-	Material
+	Material,
+	Camera
 };
 
 class Component

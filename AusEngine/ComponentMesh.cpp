@@ -27,7 +27,7 @@ ComponentMesh::~ComponentMesh()
 //Renders the current Mesh
 bool ComponentMesh::Update()
 {
-	ComponentTransform* transform = (ComponentTransform*)gameObject->GetComponent(Transform);
+	ComponentTransform* transform = gameObject->transform;
 	ComponentMaterial* material = (ComponentMaterial*)gameObject->GetComponent(Material);
 
 	if (transform == nullptr && material == nullptr)
@@ -39,8 +39,7 @@ bool ComponentMesh::Update()
 	else
 		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
 
-	App->renderer3D->RenderDebugAABB(transform->GetAABB(), transform->GetWorldTransform());
-	
+	App->renderer3D->RenderDebugAABB(transform->GetOBB(), transform->GetWorldTransform());
 
 	return true;
 }

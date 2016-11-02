@@ -164,7 +164,13 @@ void ComponentTransform::GenerateBoundingBox(unsigned int* vertices,unsigned int
 	tmpObb = gBox.Transform(world_transform);
 	TBox = tmpObb.MinimalEnclosingAABB();
 }
+
 math::AABB ComponentTransform::GetAABB() const
 {
 	return TBox;
+}
+
+math::OBB ComponentTransform::GetOBB() const
+{
+	return tmpObb;
 }

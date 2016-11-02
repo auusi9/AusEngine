@@ -5,6 +5,8 @@
 class Component;
 enum componentType;
 class AABB;
+class ComponentTransform;
+class ComponentMesh;
 class GameObject
 {
 public:
@@ -28,8 +30,8 @@ public:
 	Component* GetComponent(componentType _type);
 	std::vector<Component*> Components;
 	
-	
-	void GenerateBoundingBox(uint* vertices, uint numVertices);
+	ComponentTransform* transform = nullptr;
+	ComponentMesh* mesh = nullptr;
 	
 private:
 

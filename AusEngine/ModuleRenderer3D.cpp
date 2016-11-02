@@ -190,48 +190,54 @@ void ModuleRenderer3D::RenderMesh(MeshT mesh, math::float4x4 transform, uint tex
 	glPopMatrix();
 }
 
-void ModuleRenderer3D::RenderDebugAABB(math::AABB box, math::float4x4 transform)
+void ModuleRenderer3D::RenderDebugAABB(math::OBB box, math::float4x4 transform)
 {
-	static float3 corners[8];
-	box.GetCornerPoints(corners);
+	float3 corner_array[8];
+	box.GetCornerPoints(corner_array);
 
-	
-	
-	Color color = { 255,255,0};
-	glColor3f(color.r, color.g, color.b);
+	// Parallelepiped by Lines ----------------
 
-	glBegin(GL_LINE_STRIP);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glVertex3fv((GLfloat*)&corners[1]); //glVertex3f(-sx, -sy, sz);
-	glVertex3fv((GLfloat*)&corners[5]); //glVertex3f( sx, -sy, sz);
-	glVertex3fv((GLfloat*)&corners[7]); //glVertex3f( sx,  sy, sz);
-	glVertex3fv((GLfloat*)&corners[3]); //glVertex3f(-sx,  sy, sz);
+	glBegin(GL_LINES);
 
-	glVertex3fv((GLfloat*)&corners[4]); //glVertex3f( sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[0]); //glVertex3f(-sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[2]); //glVertex3f(-sx,  sy, -sz);
-	glVertex3fv((GLfloat*)&corners[6]); //glVertex3f( sx,  sy, -sz);
+	// Top Side ----->
+	glVertex3fv((GLfloat*)&corner_array[2]);
+	glVertex3fv((GLfloat*)&corner_array[3]);
 
-	glVertex3fv((GLfloat*)&corners[5]); //glVertex3f(sx, -sy,  sz);
-	glVertex3fv((GLfloat*)&corners[4]); //glVertex3f(sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[6]); //glVertex3f(sx,  sy, -sz);
-	glVertex3fv((GLfloat*)&corners[7]); //glVertex3f(sx,  sy,  sz);
+	glVertex3fv((GLfloat*)&corner_array[3]);
+	glVertex3fv((GLfloat*)&corner_array[7]);
 
-	glVertex3fv((GLfloat*)&corners[0]); //glVertex3f(-sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[1]); //glVertex3f(-sx, -sy,  sz);
-	glVertex3fv((GLfloat*)&corners[3]); //glVertex3f(-sx,  sy,  sz);
-	glVertex3fv((GLfloat*)&corners[2]); //glVertex3f(-sx,  sy, -sz);
+	glVertex3fv((GLfloat*)&corner_array[7]);
+	glVertex3fv((GLfloat*)&corner_array[6]);
 
-	glVertex3fv((GLfloat*)&corners[3]); //glVertex3f(-sx, sy,  sz);
-	glVertex3fv((GLfloat*)&corners[7]); //glVertex3f( sx, sy,  sz);
-	glVertex3fv((GLfloat*)&corners[6]); //glVertex3f( sx, sy, -sz);
-	glVertex3fv((GLfloat*)&corners[2]); //glVertex3f(-sx, sy, -sz);
+	glVertex3fv((GLfloat*)&corner_array[6]);
+	glVertex3fv((GLfloat*)&corner_array[2]);
 
-	glVertex3fv((GLfloat*)&corners[0]); //glVertex3f(-sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[4]); //glVertex3f( sx, -sy, -sz);
-	glVertex3fv((GLfloat*)&corners[5]); //glVertex3f( sx, -sy,  sz);
-	glVertex3fv((GLfloat*)&corners[1]); //glVertex3f(-sx, -sy,  sz);
-	
+	// Down Side ---->
+	glVertex3fv((GLfloat*)&corner_array[0]);
+	glVertex3fv((GLfloat*)&corner_array[1]);
+
+	glVertex3fv((GLfloat*)&corner_array[1]);
+	glVertex3fv((GLfloat*)&corner_array[5]);
+
+	glVertex3fv((GLfloat*)&corner_array[5]);
+	glVertex3fv((GLfloat*)&corner_array[4]);
+
+	glVertex3fv((GLfloat*)&corner_array[4]);
+	glVertex3fv((GLfloat*)&corner_array[0]);
+
+	// Height ------->
+	glVertex3fv((GLfloat*)&corner_array[2]);
+	glVertex3fv((GLfloat*)&corner_array[0]);
+
+	glVertex3fv((GLfloat*)&corner_array[3]);
+	glVertex3fv((GLfloat*)&corner_array[1]);
+
+	glVertex3fv((GLfloat*)&corner_array[7]);
+	glVertex3fv((GLfloat*)&corner_array[5]);
+
+	glVertex3fv((GLfloat*)&corner_array[6]);
+	glVertex3fv((GLfloat*)&corner_array[4]);
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnd();
 
