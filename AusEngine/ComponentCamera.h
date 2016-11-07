@@ -14,15 +14,6 @@ public:
 	
 };
 
-class Frustrum
-{
-public:
-	Frustrum();
-	~Frustrum();
-
-private:
-
-};
 
 
 #endif // !__COMPONENTCAMERA_H__

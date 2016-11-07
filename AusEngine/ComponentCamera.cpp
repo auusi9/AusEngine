@@ -26,11 +26,3 @@ void ComponentCamera::OnEditor()
 		
 	}
 }
-
-Frustrum::Frustrum()
-{
-}
-
-Frustrum::~Frustrum()
-{
-}

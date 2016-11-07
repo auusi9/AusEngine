@@ -27,10 +27,13 @@ public:
 
 	math::float3 GetWorldPosition() const;
 
-	math::float4x4 GetWorldTransform() const;
+	math::float4x4 GetWorldTransform();
 	math::float4x4 GetLocalTransform() const;
+	math::float4x4 GetWorldTransformnoCalculate() const;
+	void UpdateChildTransform() const;
 
 	void GenerateBoundingBox(unsigned int* vertices, unsigned int numVertices);
+	void UpdateBoundingBox();
 	math::AABB GetAABB() const;
 	math::OBB GetOBB() const;
 private:

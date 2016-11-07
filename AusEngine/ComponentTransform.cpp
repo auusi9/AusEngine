@@ -75,8 +75,9 @@ void ComponentTransform::SetPosition(math::float3 _position)
 	position = _position;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
 	world_transform = GetWorldTransform();
-	tmpObb = gBox.Transform(world_transform);
-	TBox = tmpObb.MinimalEnclosingAABB();
+	GetWorldTransform();
+	UpdateChildTransform();
+	UpdateBoundingBox();
 }
 
 void ComponentTransform::SetRotation(math::float3 _rotationAngles)
@@ -85,26 +86,26 @@ void ComponentTransform::SetRotation(math::float3 _rotationAngles)
 	anglesRad = DegToRad(_rotationAngles);
 	rotation = rotation.FromEulerXYZ(anglesRad.x, anglesRad.y, anglesRad.z);
 	local_transform = local_transform.FromTRS(position, rotation, scale);
-	world_transform = GetWorldTransform();
-	tmpObb = gBox.Transform(world_transform);
-	TBox = tmpObb.MinimalEnclosingAABB();
+	GetWorldTransform();
+	UpdateChildTransform();
+	UpdateBoundingBox();
 }
 void ComponentTransform::SetRotationQuat(math::Quat _rotation)
 {
-	angles = _rotation.ToEulerXYZ();
+	angles = RadToDeg(_rotation.ToEulerXYZ());
 	rotation = _rotation;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
-	world_transform = GetWorldTransform();
-	tmpObb = gBox.Transform(world_transform);
-	TBox = tmpObb.MinimalEnclosingAABB();
+	GetWorldTransform();
+	UpdateChildTransform();
+	UpdateBoundingBox();
 }
 void ComponentTransform::SetScale(math::float3 _scale)
 {
 	scale = _scale;
 	local_transform = local_transform.FromTRS(position, rotation, scale);
-	world_transform = GetWorldTransform();
-	tmpObb = gBox.Transform(world_transform);
-	TBox = tmpObb.MinimalEnclosingAABB();
+	GetWorldTransform();
+	UpdateChildTransform();
+	UpdateBoundingBox();
 }
 
 math::float3 ComponentTransform::GetPosition() const
@@ -136,18 +137,40 @@ math::float3 ComponentTransform::GetWorldPosition() const
 	return tmpposition;
 }
 
-math::float4x4 ComponentTransform::GetWorldTransform() const
+math::float4x4 ComponentTransform::GetWorldTransformnoCalculate() const
 {
-	math::float4x4 tmptransform = local_transform;
+	return world_transform;
+}
+
+math::float4x4 ComponentTransform::GetWorldTransform() 
+{
+	 math::float4x4 tmptransform = local_transform;
 
 	if (gameObject->root != nullptr)
 	{
-		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->GetComponent(Transform);
-		if(parentTransform != nullptr)
+		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->transform;
+		if (parentTransform != nullptr)
+		{
 			tmptransform =  parentTransform->GetWorldTransform() * tmptransform;
+		}
 	}
-
+	
+	world_transform = tmptransform;
 	return tmptransform;
+}
+
+void ComponentTransform::UpdateChildTransform() const
+{
+	for (std::vector<GameObject*>::iterator item = gameObject->goChilds.begin(); item != gameObject->goChilds.end(); ++item)
+	{
+		ComponentTransform* childTransform = (ComponentTransform*)(*item)->transform;
+		if (childTransform != nullptr)
+		{
+			math::float4x4 tmptransform = childTransform->GetWorldTransform();
+			childTransform->UpdateChildTransform();
+			childTransform->UpdateBoundingBox();
+		}
+	}
 }
 
 math::float4x4 ComponentTransform::GetLocalTransform() const
@@ -160,7 +183,13 @@ void ComponentTransform::GenerateBoundingBox(unsigned int* vertices,unsigned int
 	gBox.SetNegativeInfinity();
 	gBox.Enclose((float3*)vertices, numVertices);
 
-	world_transform = GetWorldTransform();
+	GetWorldTransform();
+	tmpObb = gBox.Transform(world_transform);
+	TBox = tmpObb.MinimalEnclosingAABB();
+}
+
+void ComponentTransform::UpdateBoundingBox()
+{
 	tmpObb = gBox.Transform(world_transform);
 	TBox = tmpObb.MinimalEnclosingAABB();
 }

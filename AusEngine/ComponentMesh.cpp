@@ -33,13 +33,13 @@ bool ComponentMesh::Update()
 	if (transform == nullptr && material == nullptr)
 		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, 0);
 	else if( material == nullptr)
-		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), 0);
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), 0);
 	else if (transform == nullptr)
 		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, material->textureId);
 	else
-		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransform(), material->textureId);
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), material->textureId);
 
-	App->renderer3D->RenderDebugAABB(transform->GetOBB(), transform->GetWorldTransform());
+	App->renderer3D->RenderDebugAABB(transform->GetOBB());
 
 	return true;
 }
