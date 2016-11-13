@@ -96,6 +96,7 @@
     <ClInclude Include="Imgui\stb_rect_pack.h" />
     <ClInclude Include="Imgui\stb_textedit.h" />
     <ClInclude Include="Imgui\stb_truetype.h" />
+    <ClInclude Include="Importer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\src\Algorithm\Random\LCG.h" />
@@ -161,7 +162,6 @@
     <ClInclude Include="ModuleGameObjectManager.h" />
     <ClInclude Include="ModuleImGui.h" />
     <ClInclude Include="ModuleLoadMeshes.h" />
-    <ClInclude Include="ModuleLoadTextures.h" />
     <ClInclude Include="ModulePhysics3D.h" />
     <ClInclude Include="ModuleRenderer3D.h" />
     <ClInclude Include="p2List.h" />
@@ -177,6 +177,8 @@
     <ClInclude Include="PhysFS\include\physfs.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="AusRandom.h" />
+    <ClInclude Include="MaterialImporter.h" />
+    <ClInclude Include="MeshImporter.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -234,7 +236,6 @@
     <ClCompile Include="ModuleImGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleLoadMeshes.cpp" />
-    <ClCompile Include="ModuleLoadTextures.cpp" />
     <ClCompile Include="ModulePhysics3D.cpp" />
     <ClCompile Include="ModuleRenderer3D.cpp" />
     <ClCompile Include="ModuleSceneIntro.cpp" />
@@ -242,6 +243,8 @@
     <ClCompile Include="parson.c" />
     <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="Primitive.cpp" />
+    <ClCompile Include="MaterialImporter.cpp" />
+    <ClCompile Include="MeshImporter.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

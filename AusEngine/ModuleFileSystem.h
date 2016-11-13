@@ -37,6 +37,10 @@ public:
 
 	unsigned int Save(const char* file, const char* buffer, unsigned int size) const;
 
+	void NormalizePath(std::string &full_path) const;
+
+	bool SaveUnique(std::string &name, const char* buffer, uint size, const char* path, const char* prefix, const char* extension);
+
 private:
 
 };

@@ -163,3 +163,30 @@ unsigned int ModuleFileSystem::Save(const char* file, const char* buffer, unsign
 
 	return ret;
 }
+
+void ModuleFileSystem::NormalizePath(std::string &full_path) const
+{
+	for (std::string::iterator it = full_path.begin(); it != full_path.end(); ++it)
+	{
+		if (*it == '\\')
+			*it = '/';
+		else
+			*it = tolower(*it);
+	}
+}
+
+bool ModuleFileSystem::SaveUnique(std::string &name, const char* buffer, uint size, const char* path, const char* prefix, const char* extension)
+{
+	char result[250];
+	
+	sprintf_s(result, 250, "%s%s.%s", path, prefix, extension);
+	std::string paths(result);
+	NormalizePath(paths);
+
+	if (Save(result, buffer, size) > 0)
+	{
+		name = result;
+		return true;
+	}
+	return false;
+}

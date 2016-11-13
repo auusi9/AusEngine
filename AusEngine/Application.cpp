@@ -18,7 +18,6 @@ Application::Application()
 	imgui = new ModuleImGui(this);
 	fs = new ModuleFileSystem(this);
 	MeshD = new ModuleLoadMeshes(this);
-	tex = new ModuleLoadTextures(this);
 	go = new ModuleGameObjectManager(this);
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -33,7 +32,6 @@ Application::Application()
 	AddModule(audio);
 	AddModule(fs);
 	AddModule(MeshD);
-	AddModule(tex);
 	AddModule(go);
 	// Scenes
 	AddModule(scene_intro);
