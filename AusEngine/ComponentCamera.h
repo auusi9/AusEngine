@@ -17,8 +17,11 @@ public:
 	void SetFov(float fov);
 	void SetAspectRatio(float w, float h);
 	Frustum frustum;
+
+	bool ContainsAaBox(const math::AABB& refBox) const;
 private:
 	float aspectRatio = 0.0f;
+	Color color;
 };
 
 

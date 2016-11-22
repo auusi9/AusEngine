@@ -6,7 +6,7 @@
 
 #define MAX_LIGHTS 8
 struct MeshT;
-namespace math { class float4x4; class OBB; }
+namespace math { class float4x4; class OBB; class Frustum; }
 
 class ModuleRenderer3D : public Module
 {
@@ -22,6 +22,7 @@ public:
 	
 	void RenderMesh(MeshT mesh,math::float4x4 transform, uint tex_id);
 	void RenderDebugAABB(math::OBB box);
+	void RenderDebugFrustrum(math::Frustum frus);
 	void OnResize(int width, int height);
 
 public:

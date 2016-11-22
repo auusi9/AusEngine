@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "GameObject.h"
 #include "ModuleLoadMeshes.h"
+#include "Component.h"
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -16,6 +17,7 @@ bool ModuleSceneIntro::Start()
 
 	sceneObjects = App->MeshD->Load("Assets/FBX/Street environment_V01.fbx");
 
+	(*sceneObjects.begin())->AddComponent(Camera);
 	return ret;
 }
 
