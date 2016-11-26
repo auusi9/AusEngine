@@ -58,7 +58,7 @@ bool ModulePhysics3D::Start()
 
 	return true;
 }
-
+/*
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 {
@@ -161,7 +161,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Plane& plane)
 
 	return pbody;
 }
-
+*/
 // ---------------------------------------------------------
 PhysBody3D*	ModulePhysics3D::AddHeighField(const char* filename, int width, int length)
 {
@@ -288,7 +288,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 
 // ---------------------------------------------------------
 update_status ModulePhysics3D::Update(float dt)
-{
+{/*
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
@@ -318,7 +318,7 @@ update_status ModulePhysics3D::Update(float dt)
 			App->physics3D->AddBody(c);
 		}
 	}
-
+	*/
 	return UPDATE_CONTINUE;
 }
 
@@ -373,10 +373,10 @@ bool ModulePhysics3D::CleanUp()
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
-	line.origin.Set(from.getX(), from.getY(), from.getZ());
+	/*line.origin.Set(from.getX(), from.getY(), from.getZ());
 	line.destination.Set(to.getX(), to.getY(), to.getZ());
 	line.color.Set(color.getX(), color.getY(), color.getZ());
-	line.Render();
+	line.Render();*/
 }
 
 void DebugDrawer::drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color)

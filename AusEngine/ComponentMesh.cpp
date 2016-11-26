@@ -27,19 +27,9 @@ ComponentMesh::~ComponentMesh()
 //Renders the current Mesh
 bool ComponentMesh::Update()
 {
-	ComponentTransform* transform = gameObject->transform;
-	ComponentMaterial* material = (ComponentMaterial*)gameObject->GetComponent(Material);
 
-	if (transform == nullptr && material == nullptr)
-		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, 0);
-	else if( material == nullptr)
-		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), 0);
-	else if (transform == nullptr)
-		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, material->textureId);
-	else
-		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), material->textureId);
-
-	App->renderer3D->RenderDebugAABB(transform->GetOBB());
+	//Render AABB
+	//App->renderer3D->RenderDebugAABB(transform->GetOBB());
 
 	return true;
 }
@@ -54,6 +44,20 @@ void ComponentMesh::OnEditor()
 		ImGui::Text("Vertices: %d", Cmesh.numVertices);
 		ImGui::Text("Indices: %d", Cmesh.numIndices);
 	}
+}
+void ComponentMesh::OnDraw()
+{
+	ComponentTransform* transform = gameObject->transform;
+	ComponentMaterial* material = (ComponentMaterial*)gameObject->GetComponent(Material);
+
+	if (transform == nullptr && material == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, 0);
+	else if (material == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), 0);
+	else if (transform == nullptr)
+		App->renderer3D->RenderMesh(Cmesh, math::float4x4::identity, material->textureId);
+	else
+		App->renderer3D->RenderMesh(Cmesh, transform->GetWorldTransformnoCalculate(), material->textureId);
 }
 //If there is no mesh adds a mesh if there is a mesh changes the current Mesh
 bool ComponentMesh::AddMesh(MeshT _mesh)

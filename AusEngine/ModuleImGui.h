@@ -14,4 +14,9 @@ public:
 	update_status PreUpdate(float dt);
 	bool CleanUp();
 
+	void HandleInput(SDL_Event* event);
+	bool UsingKeyboard();
+	bool UsingMouse();
+	bool capture_keyboard = false;
+	bool capture_mouse = false;
 };

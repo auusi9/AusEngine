@@ -1,10 +1,21 @@
-#pragma once
+#ifndef __MODULEINPUT_H__
+#define __MODULEINPUT_H__
+
 #include "Module.h"
-#include "Globals.h"
 
-#define MAX_MOUSE_BUTTONS 5
+#include "SDL/include/SDL_scancode.h"
 
-enum KEY_STATE
+#define NUM_MOUSE_BUTTONS 5
+
+enum EventWindow
+{
+	WE_QUIT = 0,
+	WE_HIDE = 1,
+	WE_SHOW = 2,
+	WE_COUNT
+};
+
+enum KeyState
 {
 	KEY_IDLE = 0,
 	KEY_DOWN,
@@ -14,57 +25,51 @@ enum KEY_STATE
 
 class ModuleInput : public Module
 {
+
 public:
-	
+
 	ModuleInput(Application* app, bool start_enabled = true);
-	~ModuleInput();
 
-	bool Init();
-	update_status PreUpdate(float dt);
-	bool CleanUp();
+	// Destructor
+	virtual ~ModuleInput();
 
-	KEY_STATE GetKey(int id) const
+	// Called before render is available
+	bool Init() override;
+
+	// Called each loop iteration
+	update_status PreUpdate(float dt) override;
+
+	// Called before quitting
+	bool CleanUp() override;
+
+	// Check key states
+	KeyState GetKey(int id) const
 	{
 		return keyboard[id];
 	}
 
-	KEY_STATE GetMouseButton(int id) const
+	KeyState GetMouseButton(int id) const
 	{
-		return mouse_buttons[id];
+		return mouse_buttons[id - 1];
 	}
 
-	int GetMouseX() const
-	{
-		return mouse_x;
-	}
+	// Check for window events last frame
+	bool GetWindowEvent(EventWindow code) const;
 
-	int GetMouseY() const
-	{
-		return mouse_y;
-	}
-
-	int GetMouseZ() const
-	{
-		return mouse_z;
-	}
-
-	int GetMouseXMotion() const
-	{
-		return mouse_x_motion;
-	}
-
-	int GetMouseYMotion() const
-	{
-		return mouse_y_motion;
-	}
+	// Get mouse / axis position
+	void GetMouseMotion(int& x, int& y) const;
+	void GetMousePosition(int& x, int& y) const;
+	int GetMouseWheel() const;
 
 private:
-	KEY_STATE* keyboard;
-	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
-	int mouse_x;
-	int mouse_y;
-	int mouse_z;
-	int mouse_x_motion;
-	int mouse_y_motion;
-	//int mouse_z_motion;
+	bool		windowEvents[WE_COUNT];
+	KeyState*	keyboard = nullptr;
+	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	int mouse_motion_x = 0;
+	int mouse_motion_y = 0;
+	int mouse_x = 0;
+	int mouse_y = 0;
+	int mouse_wheel = 0;
 };
+
+#endif // __MODULEINPUT_H__

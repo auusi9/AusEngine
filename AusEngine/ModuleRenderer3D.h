@@ -7,6 +7,7 @@
 #define MAX_LIGHTS 8
 struct MeshT;
 namespace math { class float4x4; class OBB; class Frustum; }
+class ComponentCamera;
 
 class ModuleRenderer3D : public Module
 {
@@ -24,9 +25,12 @@ public:
 	void RenderDebugAABB(math::OBB box);
 	void RenderDebugFrustrum(math::Frustum frus);
 	void OnResize(int width, int height);
-
+	void RefreshProjection();
+	bool GetVSync() const;
+	void SetVSync(bool vsync);
 public:
-
+	bool vsync;
+	ComponentCamera* active_camera = nullptr;
 	uint my_id = 0;
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;

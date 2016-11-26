@@ -15,6 +15,7 @@ public:
 	bool AddMesh(MeshT _mesh);
 	bool DeleteMesh();
 	void OnEditor();
+	void OnDraw();
 	MeshT Cmesh;
 };
 

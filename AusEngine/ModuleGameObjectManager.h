@@ -4,6 +4,7 @@
 #include "Module.h"
 
 class GameObject;
+class ComponentCamera;
 
 class ModuleGameObjectManager : public Module
 {
@@ -19,12 +20,12 @@ public:
 
 	GameObject* AddGameObject(GameObject* parent);
 	bool RemoveGameObject(GameObject* go);
-
+	void DrawSceneGameObjects(GameObject* go);
 	void HierarchyPanel();
 	void HierarchyShowChilds(GameObject* parent);
 
 	void InspectorPanel();
-
+	ComponentCamera* toTest;
 	GameObject* focusGo= nullptr;
 private:
 	uint numObjects = 0;

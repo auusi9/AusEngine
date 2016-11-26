@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleGameObjectManager.h"
 #include "GameObject.h"
 #include "ModuleLoadMeshes.h"
 #include "Component.h"
@@ -16,8 +17,8 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	sceneObjects = App->MeshD->Load("Assets/FBX/Street environment_V01.fbx");
-
-	(*sceneObjects.begin())->AddComponent(Camera);
+	(*sceneObjects.begin())->AddComponent(Transform);
+	App->go->toTest = (ComponentCamera*)(*sceneObjects.begin())->AddComponent(Camera);
 	return ret;
 }
 

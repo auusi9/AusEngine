@@ -30,10 +30,28 @@ bool ModuleImGui::CleanUp()
 	ImGui_ImplSdlGL3_Shutdown();
 	return true;
 }
+
+void ModuleImGui::HandleInput(SDL_Event * event)
+{
+	ImGui_ImplSdlGL3_ProcessEvent(event);
+}
+
+bool ModuleImGui::UsingKeyboard()
+{
+	return capture_keyboard;
+}
+
+bool ModuleImGui::UsingMouse()
+{
+	return capture_mouse;
+}
+
 update_status ModuleImGui::PreUpdate(float dt)
 {
 	ImGui_ImplSdlGL3_NewFrame(App->window->window);
-
+	ImGuiIO& io = ImGui::GetIO();
+		capture_keyboard = io.WantCaptureKeyboard;
+		capture_mouse = io.WantCaptureMouse;
 	return UPDATE_CONTINUE;
 }
 

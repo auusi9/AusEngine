@@ -26,10 +26,10 @@ public:
 	update_status PostUpdate(float dt);
 	bool CleanUp();
 
-	PhysBody3D*		AddBody(const Cube& cube, float mass = 1.0f);
+	/*PhysBody3D*		AddBody(const Cube& cube, float mass = 1.0f);
 	PhysBody3D*		AddBody(const Sphere& sphere, float mass = 1.0f);
 	PhysBody3D*		AddBody(const Cylinder& cylinder, float mass = 1.0f);
-	PhysBody3D*		AddBody(const Plane& plane);
+	PhysBody3D*		AddBody(const Plane& plane);*/
 	PhysBody3D*		AddHeighField(const char* filename, int width, int height);
 
 	void DeleteBody(PhysBody3D* body);
@@ -52,7 +52,7 @@ private:
 class DebugDrawer : public btIDebugDraw
 {
 public:
-	DebugDrawer() : line(0,0,0)
+	DebugDrawer()
 	{}
 
 	void drawLine(const btVector3& from, const btVector3& to, const btVector3& color);
@@ -63,6 +63,6 @@ public:
 	int	 getDebugMode() const;
 
 	DebugDrawModes mode;
-	Line line;
+	//Line line;
 	Primitive point;
 };

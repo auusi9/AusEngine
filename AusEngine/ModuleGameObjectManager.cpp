@@ -1,7 +1,12 @@
 #include "ModuleGameObjectManager.h"
+#include "Application.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "ComponentTransform.h"
+#include "ComponentMesh.h"
+#include "ComponentCamera.h"
 #include "Imgui\imgui.h"
+#include "ModuleCamera3D.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -31,7 +36,7 @@ bool ModuleGameObjectManager::CleanUp()
 update_status ModuleGameObjectManager::Update(float dt)
 {
 	root->Update();
-
+	DrawSceneGameObjects(root);
 	HierarchyPanel();
 	InspectorPanel();
 	return UPDATE_CONTINUE;
@@ -57,6 +62,22 @@ bool ModuleGameObjectManager::RemoveGameObject(GameObject* go)
 {
 	numObjects--;
 	return go->root->RemoveChild(go);
+}
+
+void ModuleGameObjectManager::DrawSceneGameObjects(GameObject* go)
+{
+	for (vector<GameObject*>::iterator item = go->goChilds.begin(); item != go->goChilds.end(); ++item)
+	{
+		DrawSceneGameObjects(*item);	
+	}
+	if (go->mesh != nullptr)
+	{
+		if (/*App->camera->GetDummy()*/toTest->ContainsAaBox(go->transform->GetAABB()))
+		{
+			go->mesh->OnDraw();
+		}
+	}
+
 }
 
 void ModuleGameObjectManager::HierarchyPanel()
