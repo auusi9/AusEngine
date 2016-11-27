@@ -135,3 +135,13 @@ bool GameObject::RemoveChild(GameObject* child)
 	return ret;
 }
 
+bool GameObject::GetStatic()
+{
+	return isStatic;
+}
+
+bool GameObject::GetActive()
+{
+	return Active;
+}
+

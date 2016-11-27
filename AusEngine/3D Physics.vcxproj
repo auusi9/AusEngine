@@ -179,6 +179,7 @@
     <ClInclude Include="AusRandom.h" />
     <ClInclude Include="MaterialImporter.h" />
     <ClInclude Include="MeshImporter.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +246,7 @@
     <ClCompile Include="Primitive.cpp" />
     <ClCompile Include="MaterialImporter.cpp" />
     <ClCompile Include="MeshImporter.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>

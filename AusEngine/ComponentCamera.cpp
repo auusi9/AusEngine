@@ -91,7 +91,7 @@ bool ComponentCamera::Update()
 // -----------------------------------------------------------------
 void ComponentCamera::OnUpdateTransform()
 {
-	float4x4 trans = gameObject->transform->GetWorldTransform();
+	float4x4 trans = gameObject->transform->GetWorldTransformnoCalculate();
 
 	frustum.pos = trans.TranslatePart();
 	frustum.front = trans.WorldZ();

@@ -1,5 +1,6 @@
 #ifndef __GAMEOBJECT_H__
 #define __GAMEOBJECT_H__
+
 #include "Globals.h"
 #include <vector>
 class Component;
@@ -25,6 +26,8 @@ public:
 	bool CleanUp();
 
 	bool RemoveChild(GameObject* child);
+	bool GetStatic();
+	bool GetActive();
 
 	Component* AddComponent(componentType _type);
 	Component* GetComponent(componentType _type);
@@ -34,7 +37,8 @@ public:
 	ComponentMesh* mesh = nullptr;
 	
 private:
-
+	bool isStatic = false;
+	bool Active = true;
 };
 
 #endif // !__GAMEOBJECT_H__
