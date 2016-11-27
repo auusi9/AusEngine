@@ -1,4 +1,5 @@
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 #include "GameObject.h"
 #include "Imgui\imgui.h"
 #include "Math.h"
@@ -51,21 +52,25 @@ bool ComponentTransform::Update()
 //Shows Position, Euler angles in degrees and scale, and allows the user to modify them
 void ComponentTransform::OnEditor()
 {
+	
 	if (ImGui::CollapsingHeader("Transform"))
 	{
-		if (ImGui::DragFloat3("##pos", position.ptr()))
+		if (gameObject->GetStatic() == false)
 		{
-			SetPosition(position);
-		}
+			if (ImGui::DragFloat3("##pos", position.ptr()))
+			{
+				SetPosition(position);
+			}
 
-		if (ImGui::DragFloat3("##ang", angles.ptr()))
-		{
-			SetRotation(angles);
-		}
+			if (ImGui::DragFloat3("##ang", angles.ptr()))
+			{
+				SetRotation(angles);
+			}
 
-		if (ImGui::DragFloat3("##sca", scale.ptr()))
-		{
-			SetScale(scale);
+			if (ImGui::DragFloat3("##sca", scale.ptr()))
+			{
+				SetScale(scale);
+			}
 		}
 	}
 }
@@ -154,8 +159,15 @@ math::float4x4 ComponentTransform::GetWorldTransform()
 			tmptransform =  parentTransform->GetWorldTransform() * tmptransform;
 		}
 	}
-	
+
 	world_transform = tmptransform;
+
+	ComponentCamera* camera = (ComponentCamera*)gameObject->GetComponent(Camera);
+	if (camera != nullptr)
+	{
+		camera->OnUpdateTransform();
+	}
+
 	return tmptransform;
 }
 
