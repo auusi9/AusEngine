@@ -15,7 +15,7 @@ ComponentCamera::ComponentCamera(GameObject* go) : Component(Camera,go)
 	frustum.up = float3::unitY;
 
 	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 1000.0f;
+	frustum.farPlaneDistance = 200.0f;
 	frustum.verticalFov = DEGTORAD * 60.0f;
 	SetAspectRatio(1.3f);
 
@@ -130,12 +130,13 @@ void ComponentCamera::OnEditor()
 			asp_rat_vec[0] = frustum.nearPlaneDistance;
 			asp_rat_vec[1] = frustum.farPlaneDistance;
 
-			if (ImGui::SliderFloat2("Near|Far", asp_rat_vec, 1, 200, "%.0f")) // Better with a "fill box"
+			if (ImGui::SliderFloat("Near Plane", &frustum.nearPlaneDistance, 1, frustum.farPlaneDistance, "%.0f"))
 			{
-				frustum.nearPlaneDistance = asp_rat_vec[0];
-				frustum.farPlaneDistance = asp_rat_vec[1];
 			}
 
+			if (ImGui::SliderFloat("Far Plane", &frustum.farPlaneDistance, frustum.nearPlaneDistance, 200, "%.0f")) 
+			{
+			}
 			ImGui::TreePop();
 		}
 	}
