@@ -17,8 +17,9 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	sceneObjects = App->MeshD->Load("Assets/FBX/Street environment_V01.fbx");
-	(*sceneObjects.begin())->AddComponent(Transform);
-	App->go->toTest = (ComponentCamera*)(*sceneObjects.begin())->AddComponent(Camera);
+	GameObject* go = App->go->AddGameObject(nullptr);
+	go->AddComponent(Transform);
+	App->go->toTest = (ComponentCamera*)go->AddComponent(Camera);
 	return ret;
 }
 

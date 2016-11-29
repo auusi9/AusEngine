@@ -53,7 +53,7 @@ bool QuadtreeNode::Clear()
 bool QuadtreeNode::Insert(GameObject* go)
 {
 	
-	if (!box.Contains(go->transform->GetWorldPosition()))
+	/*if (!box.Contains(go->transform->GetWorldPosition()))
 	{
 		return false;
 	}
@@ -71,10 +71,10 @@ bool QuadtreeNode::Insert(GameObject* go)
 	{
 			if ((*item)->Insert(go))
 				return true;
-	}
+	}*/
 
 	
-		/*if (box.Contains(go->transform->GetWorldPosition()))
+		if (box.Contains(go->transform->GetWorldPosition()))
 		{
 			if (childs.size() > 0)
 			{
@@ -91,7 +91,7 @@ bool QuadtreeNode::Insert(GameObject* go)
 				if (objects.size() < 4)
 				{
 					objects.push_back(go);
-					ret = true;
+					return true;
 				}
 				else
 				{
@@ -105,7 +105,7 @@ bool QuadtreeNode::Insert(GameObject* go)
 				}
 
 			}
-	}*/
+	}
 
 	
 }
