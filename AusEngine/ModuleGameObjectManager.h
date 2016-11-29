@@ -2,9 +2,10 @@
 #define __MODULEGAMEOBJECTMANAGER_H__
 
 #include "Module.h"
-
+#include "Quadtree.h"
 class GameObject;
 class ComponentCamera;
+
 
 class ModuleGameObjectManager : public Module
 {
@@ -20,16 +21,17 @@ public:
 
 	GameObject* AddGameObject(GameObject* parent);
 	bool RemoveGameObject(GameObject* go);
-	void DrawSceneGameObjects(GameObject* go);
+	void DrawSceneGameObjects();
 	void HierarchyPanel();
 	void HierarchyShowChilds(GameObject* parent);
+	void InsertOnQuadTree(GameObject* go);
 
 	void InspectorPanel();
 	ComponentCamera* toTest;
 	GameObject* focusGo= nullptr;
 private:
 	uint numObjects = 0;
-	
+	Quadtree quad;
 };
 
 #endif //!__MODULEGAMEOBJECTMANAGER_H__

@@ -15,7 +15,7 @@ ComponentCamera::ComponentCamera(GameObject* go) : Component(Camera,go)
 	frustum.up = float3::unitY;
 
 	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 200.0f;
+	frustum.farPlaneDistance = 2000.0f;
 	frustum.verticalFov = DEGTORAD * 60.0f;
 	SetAspectRatio(1.3f);
 

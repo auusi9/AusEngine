@@ -10,6 +10,7 @@ ComponentTransform::ComponentTransform(GameObject* go) : Component(Transform,go)
 	angles = { 0,0,0 };
 	scale = { 1,1,1 };
 	local_transform = local_transform.FromTRS(position, rotation, scale);
+	gBox = math::AABB();
 }
 
 //By the Moment this constructors are usless
@@ -134,10 +135,14 @@ math::float3 ComponentTransform::GetWorldPosition() const
 
 	if (gameObject->root != nullptr)
 	{
-		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->GetComponent(Transform);
+		ComponentTransform* parentTransform = (ComponentTransform*)gameObject->root->transform;
 		if (parentTransform != nullptr)
+		{
 			tmpposition += parentTransform->GetWorldPosition();
+		}
 	}
+
+
 
 	return tmpposition;
 }

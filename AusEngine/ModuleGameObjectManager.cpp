@@ -7,12 +7,14 @@
 #include "ComponentCamera.h"
 #include "Imgui\imgui.h"
 #include "ModuleCamera3D.h"
+#include "ModuleRenderer3D.h"
 #include <vector>
 #include <string>
 using namespace std;
 
 ModuleGameObjectManager::ModuleGameObjectManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	quad = Quadtree(math::AABB(float3(-500, 0, -500), float3(300, 30, 300)));
 }
 
 ModuleGameObjectManager::~ModuleGameObjectManager()
@@ -23,6 +25,7 @@ ModuleGameObjectManager::~ModuleGameObjectManager()
 bool ModuleGameObjectManager::Init()
 {
 	root = new GameObject(nullptr);
+	
 	return true;
 }
 
@@ -35,8 +38,9 @@ bool ModuleGameObjectManager::CleanUp()
 
 update_status ModuleGameObjectManager::Update(float dt)
 {
+	App->renderer3D->RenderDebugAABB(quad.root->box);
 	root->Update();
-	DrawSceneGameObjects(root);
+	DrawSceneGameObjects();
 	HierarchyPanel();
 	InspectorPanel();
 	return UPDATE_CONTINUE;
@@ -64,20 +68,23 @@ bool ModuleGameObjectManager::RemoveGameObject(GameObject* go)
 	return go->root->RemoveChild(go);
 }
 
-void ModuleGameObjectManager::DrawSceneGameObjects(GameObject* go)
+void ModuleGameObjectManager::DrawSceneGameObjects()
 {
-	for (vector<GameObject*>::iterator item = go->goChilds.begin(); item != go->goChilds.end(); ++item)
+	InsertOnQuadTree(root);
+	std::vector<GameObject*> go_toDraw;
+	
+	quad.root->Intersect(go_toDraw, toTest->frustum);
+		
+	for (vector<GameObject*>::iterator item = go_toDraw.begin(); item != go_toDraw.end(); ++item)
 	{
-		DrawSceneGameObjects(*item);	
+			if ((*item)->mesh != nullptr)
+			{
+				/*if (/*App->camera->GetDummy()toTest->ContainsAaBox(go->transform->GetAABB()))
+				{*/
+				(*item)->mesh->OnDraw();
+				//}
+			}
 	}
-	if (go->mesh != nullptr)
-	{
-		if (/*App->camera->GetDummy()*/toTest->ContainsAaBox(go->transform->GetAABB()))
-		{
-			go->mesh->OnDraw();
-		}
-	}
-
 }
 
 void ModuleGameObjectManager::HierarchyPanel()
@@ -113,6 +120,19 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 
 			ImGui::TreePop();
 		}
+}
+
+void ModuleGameObjectManager::InsertOnQuadTree(GameObject* go)
+{
+	for (vector<GameObject*>::iterator item = go->goChilds.begin(); item != go->goChilds.end(); ++item)
+	{
+		InsertOnQuadTree(*item);
+	}
+
+	if (go->transform != nullptr)
+	{
+		quad.root->Insert(go);
+	}
 }
 
 void ModuleGameObjectManager::InspectorPanel() 

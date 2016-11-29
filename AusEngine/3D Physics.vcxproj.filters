@@ -267,9 +267,6 @@
     <ClInclude Include="MathGeoLib\src\Geometry\Polyhedron.h">
       <Filter>Sources\Containers\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="MathGeoLib\src\Geometry\QuadTree.h">
-      <Filter>Sources\Containers\MathGeoLib</Filter>
-    </ClInclude>
     <ClInclude Include="MathGeoLib\src\Geometry\Ray.h">
       <Filter>Sources\Containers\MathGeoLib</Filter>
     </ClInclude>
@@ -351,7 +348,7 @@
     <ClInclude Include="Importer.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="QuadTree.h">
+    <ClInclude Include="Quadtree.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -548,7 +545,7 @@
     <ClCompile Include="MeshImporter.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="QuadTree.cpp">
+    <ClCompile Include="Quadtree.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -557,9 +554,6 @@
       <Filter>Sources\Containers\MathGeoLib</Filter>
     </None>
     <None Include="MathGeoLib\src\Geometry\KDTree.inl">
-      <Filter>Sources\Containers\MathGeoLib</Filter>
-    </None>
-    <None Include="MathGeoLib\src\Geometry\QuadTree.inl">
       <Filter>Sources\Containers\MathGeoLib</Filter>
     </None>
     <None Include="MathGeoLib\src\Geometry\TriangleMesh_IntersectRay_AVX.inl">
