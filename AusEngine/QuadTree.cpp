@@ -12,18 +12,19 @@ Quadtree::Quadtree(math::AABB box)
 
 Quadtree::~Quadtree()
 {
-	//RELEASE(root);
+	root->Clear();
+
 }
 
 
-QuadtreeNode::QuadtreeNode(math::AABB _box) : box(_box)
+QuadtreeNode::QuadtreeNode(math::AABB &_box) : box(_box)
 {
 
 }
 
 QuadtreeNode::~QuadtreeNode()
 {
-	Clear();
+	parent = nullptr;
 }
 
 bool QuadtreeNode::Create(math::AABB box)
@@ -40,6 +41,7 @@ bool QuadtreeNode::Clear()
 
 	for (std::vector<QuadtreeNode*>::iterator item = childs.begin(); item != childs.end(); ++item)
 	{
+		(*item)->Clear();
 		RELEASE(*item);
 	}
 

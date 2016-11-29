@@ -11,7 +11,8 @@ class GameObject;
 class QuadtreeNode
 {
 public:
-	QuadtreeNode(math::AABB _box);
+	QuadtreeNode() {}
+	QuadtreeNode(math::AABB &_box);
 	~QuadtreeNode();
 	bool Create(math::AABB box);
 	bool Clear();
