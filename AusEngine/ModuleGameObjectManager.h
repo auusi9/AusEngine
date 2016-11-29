@@ -16,6 +16,7 @@ public:
 	GameObject* root;
 
 	bool Init();
+	bool Start();
 	bool CleanUp();
 	update_status Update(float dt);
 

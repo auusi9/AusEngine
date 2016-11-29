@@ -19,7 +19,7 @@ Quadtree::~Quadtree()
 
 QuadtreeNode::QuadtreeNode(math::AABB &_box) : box(_box)
 {
-
+	parent = nullptr;
 }
 
 QuadtreeNode::~QuadtreeNode()
@@ -52,49 +52,62 @@ bool QuadtreeNode::Clear()
 
 bool QuadtreeNode::Insert(GameObject* go)
 {
-	bool ret = false;
-
-	if (box.Contains(go->transform->GetWorldPosition()))
+	
+	if (!box.Contains(go->transform->GetWorldPosition()))
 	{
-		if (childs.size() > 0)
-		{
-			for (std::vector<QuadtreeNode*>::iterator item = childs.begin(); item != childs.end(); ++item)
-			{
-				if ((*item)->Insert(go))
-				{
-					return true;
-				}
-					
-			}
-		}
-		else
-		{
-			if (objects.size() > 4)
-			{
-				Divide();
-				for (std::list<GameObject*>::iterator item = objects.begin(); item != objects.end(); ++item)
-				{
-					Insert(*item);
-				}
-				objects.clear();
+		return false;
+	}
 
+	if (objects.size() < 4)
+	{
+		objects.push_back(go);
+		return true;
+	}
+	
+	if (childs.empty())
+			Divide();
+		
+	for (std::vector<QuadtreeNode*>::iterator item = childs.begin(); item != childs.end(); ++item)
+	{
+			if ((*item)->Insert(go))
+				return true;
+	}
+
+	
+		/*if (box.Contains(go->transform->GetWorldPosition()))
+		{
+			if (childs.size() > 0)
+			{
 				for (std::vector<QuadtreeNode*>::iterator item = childs.begin(); item != childs.end(); ++item)
 				{
 					if ((*item)->Insert(go))
-						break;
+					{
+					}
+					
 				}
-				return true;
 			}
 			else
 			{
-				objects.push_back(go);
-				ret = true;
+				if (objects.size() < 4)
+				{
+					objects.push_back(go);
+					ret = true;
+				}
+				else
+				{
+					Divide();
+					
+					for (std::vector<QuadtreeNode*>::iterator item = childs.begin(); item != childs.end(); ++item)
+					{
+						if ((*item)->Insert(go))
+							break;
+					}
+				}
+
 			}
+	}*/
 
-		}
-	}
-
-	return ret;
+	
 }
 
 bool QuadtreeNode::Remove(GameObject* go)
@@ -125,39 +138,43 @@ bool QuadtreeNode::Remove(GameObject* go)
 
 void QuadtreeNode::Divide()
 {
+	// We need to subdivide this node ...
+	float3 size(box.Size());
+	float3 new_size(size.x*0.5f, size.y, size.z*0.5f); // Octree would subdivide y too
+
+	float3 center(box.CenterPoint());
+	float3 new_center(center);
 	math::AABB new_box;
-	for (int i = 0; i < 4; i++)
-	{
-		new_box = box;
 
-		if (i == 0)
-		{
-			new_box.minPoint.z /= 2;
-			new_box.maxPoint.x /= 2;
-		}
+	// NorthEast
+	new_center.x = center.x + size.x * 0.25f;
+	new_center.z = center.z + size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	QuadtreeNode* child = new QuadtreeNode(new_box);
+	child->parent = this;
+	childs.push_back(child);
 
-		if (i == 1)
-		{
-			new_box.minPoint.x /= 2;
-			new_box.minPoint.z /= 2;
-		}
-
-		if (i == 2)
-		{
-			new_box.maxPoint.x /= 2;
-			new_box.maxPoint.z /= 2;
-		}
-
-		if (i == 3)
-		{
-			new_box.minPoint.x /= 2;
-			new_box.maxPoint.z /= 2;
-		}
-
-		QuadtreeNode* node = new QuadtreeNode(new_box);
-		node->parent = this;
-		childs.push_back(node);
-	}
+	// SouthEast
+	new_center.x = center.x + size.x * 0.25f;
+	new_center.z = center.z - size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	QuadtreeNode* child1 = new QuadtreeNode(new_box);
+	child1->parent = this;
+	childs.push_back(child1);
+	// SouthWest
+	new_center.x = center.x - size.x * 0.25f;
+	new_center.z = center.z - size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	QuadtreeNode* child2 = new QuadtreeNode(new_box);
+	child2->parent = this;
+	childs.push_back(child2);
+	// NorthWest
+	new_center.x = center.x - size.x * 0.25f;
+	new_center.z = center.z + size.z * 0.25f;
+	new_box.SetFromCenterAndSize(new_center, new_size);
+	QuadtreeNode* child3 = new QuadtreeNode(new_box);
+	child3->parent = this;
+	childs.push_back(child3);
 }
 
 

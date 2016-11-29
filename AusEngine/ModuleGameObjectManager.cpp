@@ -14,7 +14,7 @@ using namespace std;
 
 ModuleGameObjectManager::ModuleGameObjectManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	quad = Quadtree(math::AABB(float3(-500, 0, -500), float3(300, 30, 300)));
+	quad = Quadtree(math::AABB(float3(-500,-300, -500), float3(500, 500, 500)));
 }
 
 ModuleGameObjectManager::~ModuleGameObjectManager()
@@ -25,7 +25,12 @@ ModuleGameObjectManager::~ModuleGameObjectManager()
 bool ModuleGameObjectManager::Init()
 {
 	root = new GameObject(nullptr);
-	
+	return true;
+}
+
+bool ModuleGameObjectManager::Start()
+{
+	InsertOnQuadTree(root);
 	return true;
 }
 
@@ -38,7 +43,15 @@ bool ModuleGameObjectManager::CleanUp()
 
 update_status ModuleGameObjectManager::Update(float dt)
 {
-	App->renderer3D->RenderDebugAABB(quad.root->box);
+	
+	vector<math::AABB> box;
+	quad.root->GetBoxes(box);
+	for (vector<math::AABB>::iterator item = box.begin(); item != box.end(); ++item)
+	{
+		App->renderer3D->RenderDebugAABB(*item);
+	}
+
+
 	root->Update();
 	DrawSceneGameObjects();
 	HierarchyPanel();
@@ -70,7 +83,7 @@ bool ModuleGameObjectManager::RemoveGameObject(GameObject* go)
 
 void ModuleGameObjectManager::DrawSceneGameObjects()
 {
-	InsertOnQuadTree(root);
+	
 	std::vector<GameObject*> go_toDraw;
 	
 	quad.root->Intersect(go_toDraw, toTest->frustum);
@@ -124,15 +137,17 @@ void ModuleGameObjectManager::HierarchyShowChilds(GameObject* gameObject)
 
 void ModuleGameObjectManager::InsertOnQuadTree(GameObject* go)
 {
+	if (go->transform != nullptr)
+	{
+		quad.root->Insert(go);
+	}
+
 	for (vector<GameObject*>::iterator item = go->goChilds.begin(); item != go->goChilds.end(); ++item)
 	{
 		InsertOnQuadTree(*item);
 	}
 
-	if (go->transform != nullptr)
-	{
-		quad.root->Insert(go);
-	}
+
 }
 
 void ModuleGameObjectManager::InspectorPanel() 

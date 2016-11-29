@@ -32,9 +32,10 @@ Application::Application()
 	AddModule(audio);
 	AddModule(fs);
 	AddModule(MeshD);
+	AddModule(scene_intro);
 	AddModule(go);
 	// Scenes
-	AddModule(scene_intro);
+	
 	AddModule(imgui);
 	
 	// Characters
