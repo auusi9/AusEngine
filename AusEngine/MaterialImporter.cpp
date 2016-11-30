@@ -66,8 +66,8 @@ bool MaterialImporter::Import(const void* buffer, uint size, string& output_file
 
 			ILuint   size;
 			ILubyte *data;
-			// To pick a specific DXT compression use 
-			ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+			
+			ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use 
 			size = ilSaveL(IL_DDS, NULL, 0); // Get the size of the data buffer
 			if (size > 0)
 			{

@@ -86,7 +86,7 @@ void ModuleGameObjectManager::DrawSceneGameObjects()
 	
 	std::vector<GameObject*> go_toDraw;
 	
-	quad.root->Intersect(go_toDraw, toTest->frustum);
+	quad.root->Intersect(go_toDraw, App->camera->GetDummy()->frustum);
 		
 	for (vector<GameObject*>::iterator item = go_toDraw.begin(); item != go_toDraw.end(); ++item)
 	{

@@ -70,9 +70,7 @@ inline void QuadtreeNode::Intersect(std::vector<GameObject*> &go, const TYPE &pr
 			if (primitive.Intersects((*it)->transform->GetAABB()))
 				go.push_back(*it);
 		}
-
 	}
-
 }
 
 #endif // !__QUADTREE_H__

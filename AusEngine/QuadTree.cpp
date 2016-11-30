@@ -138,15 +138,15 @@ bool QuadtreeNode::Remove(GameObject* go)
 
 void QuadtreeNode::Divide()
 {
-	// We need to subdivide this node ...
+
 	float3 size(box.Size());
-	float3 new_size(size.x*0.5f, size.y, size.z*0.5f); // Octree would subdivide y too
+	float3 new_size(size.x*0.5f, size.y, size.z*0.5f); 
 
 	float3 center(box.CenterPoint());
 	float3 new_center(center);
 	math::AABB new_box;
 
-	// NorthEast
+
 	new_center.x = center.x + size.x * 0.25f;
 	new_center.z = center.z + size.z * 0.25f;
 	new_box.SetFromCenterAndSize(new_center, new_size);
@@ -154,21 +154,21 @@ void QuadtreeNode::Divide()
 	child->parent = this;
 	childs.push_back(child);
 
-	// SouthEast
+	
 	new_center.x = center.x + size.x * 0.25f;
 	new_center.z = center.z - size.z * 0.25f;
 	new_box.SetFromCenterAndSize(new_center, new_size);
 	QuadtreeNode* child1 = new QuadtreeNode(new_box);
 	child1->parent = this;
 	childs.push_back(child1);
-	// SouthWest
+
 	new_center.x = center.x - size.x * 0.25f;
 	new_center.z = center.z - size.z * 0.25f;
 	new_box.SetFromCenterAndSize(new_center, new_size);
 	QuadtreeNode* child2 = new QuadtreeNode(new_box);
 	child2->parent = this;
 	childs.push_back(child2);
-	// NorthWest
+
 	new_center.x = center.x - size.x * 0.25f;
 	new_center.z = center.z + size.z * 0.25f;
 	new_box.SetFromCenterAndSize(new_center, new_size);
